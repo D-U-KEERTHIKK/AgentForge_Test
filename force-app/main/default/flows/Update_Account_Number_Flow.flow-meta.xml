@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <decisions>
+        <name>Check_Account_Status_Change</name>
+        <label>Check Account Status Change</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Status_Not_Customer</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Status_Is_Customer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordData.AccountStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Account_Number_Exists</targetReference>
+            </connector>
+            <label>Status Is Customer</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Account_Number_Exists</name>
+        <label>Check Account Number Exists</label>
+        <locationX>352</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Generate_Account_Number</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Account Number Missing</defaultConnectorLabel>
+        <rules>
+            <name>Account_Number_Already_Assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordData.AccountNumber</leftValueReference>
+                <operator>IsNull</operator>
+            </conditions>
+            <connector>
+                <targetReference>Validate_Account_Number_Format</targetReference>
+            </connector>
+            <label>Account Number Already Assigned</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_Account_Number_Format</name>
+        <label>Validate Account Number Format</label>
+        <locationX>528</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Show_Invalid_Format_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Invalid Format</defaultConnectorLabel>
+        <rules>
+            <name>Format_Valid</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsValidAccountNumberFormat</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Account_Duplication</targetReference>
+            </connector>
+            <label>Format Valid</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Account_Duplication</name>
+        <label>Check Account Duplication</label>
+        <locationX>704</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Show_Duplicate_Account_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Duplicate Found</defaultConnectorLabel>
+        <rules>
+            <name>No_Duplicates</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DuplicateAccountCount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Account_Industry</targetReference>
+            </connector>
+            <label>No Duplicates</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Account_Industry</name>
+        <label>Check Account Industry</label>
+        <locationX>880</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Show_Industry_Confirmation_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Industry Missing</defaultConnectorLabel>
+        <rules>
+            <name>Industry_Assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordData.Industry</leftValueReference>
+                <operator>IsNull</operator>
+            </conditions>
+            <connector>
+                <targetReference>Show_Final_Confirmation_Screen</targetReference>
+            </connector>
+            <label>Industry Assigned</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>User_Confirms_Update</name>
+        <label>User Confirms Update</label>
+        <locationX>1232</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Flow_Cancelled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>User Cancelled</defaultConnectorLabel>
+        <rules>
+            <name>User_Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FinalConfirmation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Proceed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_Record</targetReference>
+            </connector>
+            <label>User Approved</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>IsValidAccountNumberFormat</name>
+        <dataType>Boolean</dataType>
+        <expression>
+            AND(
+                LEN(recordData.AccountNumber) = 10,
+                ISNUMBER(VALUE(LEFT(recordData.AccountNumber, 4))),
+                CONTAINS("ABCDEFGHIJKLMNOPQRSTUVWXYZ", MID(recordData.AccountNumber, 5, 1)),
+                ISNUMBER(VALUE(RIGHT(recordData.AccountNumber, 5)))
+            )
+        </expression>
+    </formulas>
+    <formulas>
+        <name>DuplicateAccountCount</name>
+        <dataType>Number</dataType>
+        <expression>
+            COUNT(
+                SELECT Account FROM Account WHERE AccountNumber = recordData.AccountNumber AND Id != recordData.Id
+            )
+        </expression>
+    </formulas>
+    <formulas>
+        <name>GeneratedAccountNumber</name>
+        <dataType>String</dataType>
+        <expression>
+            CONCATENATE(
+                TEXT(YEAR(NOW())),
+                TEXT(MONTH(NOW())),
+                LEFT(recordData.Name, 2),
+                TEXT(RANDBETWEEN(1000, 9999))
+            )
+        </expression>
+    </formulas>
+    <formulas>
+        <name>AuditTrailMessage</name>
+        <dataType>String</dataType>
+        <expression>
+            CONCATENATE(
+                "Account Number Updated: ",
+                recordData.AccountNumber,
+                " | Status Changed to: Customer | Updated By: ",
+                $User.FirstName,
+                " ",
+                $User.LastName,
+                " | Timestamp: ",
+                TEXT(NOW())
+            )
+        </expression>
+    </formulas>
+    <interviewLabel>Update Account Number Flow</interviewLabel>
+    <label>Update Account Number Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Account_Record</name>
+        <label>Get Account Record</label>
+        <locationX>176</locationX>
+        <locationY>143</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Account_Status_Change</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputAssignment>
+            <assignToReference>recordData</assignToReference>
+        </outputAssignment>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>AccountNumber</queriedFields>
+        <queriedFields>AccountStatus__c</queriedFields>
+        <queriedFields>Industry</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Account_Record</name>
+        <label>Update Account Record</label>
+        <locationX>1408</locationX>
+        <locationY>335</locationY>
+        <connector>
+            <targetReference>Log_Audit_Trail</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordData.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AccountNumber</field>
+            <value>
+                <elementReference>recordData.AccountNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AccountStatus__c</field>
+            <value>
+                <stringValue>Customer</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Log_Audit_Trail</name>
+        <label>Log Audit Trail</label>
+        <locationX>1584</locationX>
+        <locationY>335</locationY>
+        <connector>
+            <targetReference>Show_Success_Screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordData.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>AuditTrailMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <screens>
+        <name>Show_Invalid_Format_Screen</name>
+        <label>Invalid Account Number Format</label>
+        <locationX>528</locationX>
+        <locationY>503</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <connector>
+            <targetReference>Flow_Error_Handling</targetReference>
+        </connector>
+        <fields>
+            <name>InvalidFormatMessage</name>
+            <fieldText>
+                <stringValue>Error: Account Number format is invalid.
+
+Expected Format: YYYYMCCXXXX
+- YYYY: Year (4 digits)
+- M: First letter of account name (1 letter)
+- C: Numeric category code (1 digit)
+- XXXX: Sequential number (4 digits)
+
+Current Value: {!recordData.AccountNumber}
+
+Please correct the account number and try again.</stringValue>
+            </fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+    <screens>
+        <name>Show_Duplicate_Account_Screen</name>
+        <label>Duplicate Account Found</label>
+        <locationX>704</locationX>
+        <locationY>503</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <connector>
+            <targetReference>Flow_Error_Handling</targetReference>
+        </connector>
+        <fields>
+            <name>DuplicateMessage</name>
+            <fieldText>
+                <stringValue>Warning: Another account with the same Account Number already exists.
+
+Account Number: {!recordData.AccountNumber}
+Number of Duplicates Found: {!DuplicateAccountCount}
+
+Please verify the account number is unique before proceeding. Contact your system administrator if you believe this is an error.</stringValue>
+            </fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+    <screens>
+        <name>Show_Industry_Confirmation_Screen</name>
+        <label>Industry Confirmation Screen</label>
+        <locationX>880</locationX>
+        <locationY>503</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <connector>
+            <targetReference>Check_User_Industry_Confirmation</targetReference>
+        </connector>
+        <fields>
+            <name>IndustryWarning</name>
+            <fieldText>
+                <stringValue>Attention: This account does not have an Industry value assigned.
+
+Account Name: {!recordData.Name}
+Account Status: {!recordData.AccountStatus__c}
+
+Would you like to continue with the update? It is recommended to assign an industry classification before converting to Customer status.</stringValue>
+            </fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>IndustryConfirmationChoice</name>
+            <choiceReferences>Yes_Choice</choiceReferences>
+            <choiceReferences>No_Choice</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+            <label>Continue Without Industry?</label>
+        </fields>
+    </screens>
+    <screens>
+        <name>Show_Final_Confirmation_Screen</name>
+        <label>Final Confirmation Screen</label>
+        <locationX>1232</locationX>
+        <locationY>503</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <connector>
+            <targetReference>User_Confirms_Update</targetReference>
+        </connector>
+        <fields>
+            <name>ConfirmationHeader</name>
+            <fieldText>
+                <stringValue>Update Account to Customer Status</stringValue>
+            </fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ConfirmationDetails</name>
+            <fieldText>
+                <stringValue>Please review the following details before confirming:
+
+Account Name: {!recordData.Name}
+Account Number: {!recordData.AccountNumber}
+Current Status: {!recordData.AccountStatus__c}
+New Status: Customer
+Industry: {!recordData.Industry}
+
+All validations have passed. Click "Proceed" to complete the update, or "Cancel" to exit without making changes.</stringValue>
+            </fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FinalConfirmation</name>
+            <choiceReferences>Proceed_Choice</choiceReferences>
+            <choiceReferences>Cancel_Choice</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+            <label>Confirm Update</label>
+        </fields>
+    </screens>
+    <screens>
+        <name>Show_Success_Screen</name>
+        <label>Success Screen</label>
+        <locationX>1760</locationX>
+        <locationY>335</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <fields>
+            <name>SuccessMessage</name>
+            <fieldText>
+                <stringValue>Success! Account has been updated to Customer status.
+
+Account Name: {!recordData.Name}
+Account Number: {!recordData.AccountNumber}
+Status: Customer
+
+The audit trail has been logged. The account is now active in your system.</stringValue>
+            </fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+    <screens>
+        <name>Generate_Account_Number</name>
+        <label>Generate Account Number Screen</label>
+        <locationX>352</locationX>
+        <locationY>503</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <connector>
+            <targetReference>Validate_Account_Number_Format</targetReference>
+        </connector>
+        <fields>
+            <name>GenerateNumberMessage</name>
+            <fieldText>
+                <stringValue>No Account Number found. A new Account Number will be generated using the following format:
+
+Generated Number: {!GeneratedAccountNumber}
+
+Account Name: {!recordData.Name}
+
+Click "Next" to continue with the generated account number.</stringValue>
+            </fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+    <screens>
+        <name>Status_Not_Customer</name>
+        <label>Status Not Customer Screen</label>
+        <locationX>176</locationX>
+        <locationY>503</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <fields>
+            <name>StatusNotCustomerMessage</name>
+            <fieldText>
+                <stringValue>Information: This account status is not "Customer".
+
+Current Status: {!recordData.AccountStatus__c}
+
+This flow only processes accounts that are being changed to "Customer" status. No updates have been made to this record.</stringValue>
+            </fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+    <screens>
+        <name>Flow_Error_Handling</name>
+        <label>Error Handling Screen</label>
+        <locationX>528</locationX>
+        <locationY>671</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>
+                <stringValue>The flow has encountered an error and could not complete the update.
+
+Please review the error details above and contact your system administrator if you need assistance.</stringValue>
+            </fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+    <screens>
+        <name>Flow_Cancelled</name>
+        <label>Flow Cancelled Screen</label>
+        <locationX>1232</locationX>
+        <locationY>503</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <fields>
+            <name>CancelledMessage</name>
+            <fieldText>
+                <stringValue>Update Cancelled
+
+You have chosen not to proceed with the account update. No changes have been made to the account record.
+
+If you need to update this account later, you can restart the flow at any time.</stringValue>
+            </fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+    <decisions>
+        <name>Check_User_Industry_Confirmation</name>
+        <label>Check User Industry Confirmation</label>
+        <locationX>880</locationX>
+        <locationY>671</locationY>
+        <defaultConnector>
+            <targetReference>Flow_Cancelled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>User Selected No</defaultConnectorLabel>
+        <rules>
+            <name>User_Confirmed_Continue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IndustryConfirmationChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Show_Final_Confirmation_Screen</targetReference>
+            </connector>
+            <label>User Confirmed Continue</label>
+        </rules>
+    </decisions>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Account_Record</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>recordData</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>FinalConfirmation</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>IndustryConfirmationChoice</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
