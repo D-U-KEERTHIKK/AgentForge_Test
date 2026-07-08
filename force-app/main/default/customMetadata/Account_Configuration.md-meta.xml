@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <label>Account Configuration</label>
+    <pluralLabel>Account Configurations</pluralLabel>
+    <description>Custom metadata type for Account configuration settings</description>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Enable__c</fullName>
+        <label>Enable</label>
+        <description>Enable this configuration</description>
+        <type>Checkbox</type>
+        <defaultValue>false</defaultValue>
+    </fields>
+    <fields>
+        <fullName>Threshold_Amount__c</fullName>
+        <label>Threshold Amount</label>
+        <description>Threshold amount for account configuration</description>
+        <type>Currency</type>
+        <scale>2</scale>
+        <precision>16</precision>
+    </fields>
+    <fields>
+        <fullName>Priority_Level__c</fullName>
+        <label>Priority Level</label>
+        <description>Priority level for configuration</description>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>false</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <label>Description</label>
+        <description>Description of the configuration</description>
+        <type>Text</type>
+        <length>255</length>
+    </fields>
+    <fields>
+        <fullName>Active_from_Date__c</fullName>
+        <label>Active from Date</label>
+        <description>Date from which this configuration becomes active</description>
+        <type>Date</type>
+    </fields>
+</CustomMetadata>
