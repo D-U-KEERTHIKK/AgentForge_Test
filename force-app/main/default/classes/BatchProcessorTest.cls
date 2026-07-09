@@ -49,7 +49,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Id batchJobId = Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -78,7 +78,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Database.executeBatch(batch, 50);
             Test.stopTest();
 
@@ -101,7 +101,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorWithExceptionImpl batch = new BatchProcessorWithExceptionImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorWithExceptionImpl();
             Id batchJobId = Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -118,7 +118,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Id batchJobId = Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -135,7 +135,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Id batchJobId = Database.executeBatch(batch, 1);
             Test.stopTest();
 
@@ -152,7 +152,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Id batchJobId = Database.executeBatch(batch, 2000);
             Test.stopTest();
 
@@ -169,8 +169,8 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
-            Database.QueryLocator ql = batch.start(null);
+            BatchProcessorImpl batchObj = new BatchProcessorImpl();
+            Database.QueryLocator ql = batchObj.start(null);
             Test.stopTest();
 
             Assert.isNotNull(ql, 'QueryLocator should be returned from start method');
@@ -188,7 +188,7 @@ private class BatchProcessorTest {
             delete [SELECT Id FROM Account WHERE Name LIKE 'Test Account%'];
 
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Id batchJobId = Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -205,7 +205,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -232,7 +232,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorFilteredImpl batch = new BatchProcessorFilteredImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorFilteredImpl();
             Id batchJobId = Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -244,7 +244,7 @@ private class BatchProcessorTest {
 /**
  * @description Batch processor implementation for testing.
  */
-class BatchProcessorImpl implements Database.Batchable<SObject> {
+private class BatchProcessorImpl implements Database.Batchable<SObject> {
 
     /**
      * @description Batch start method to define query scope.
@@ -288,7 +288,7 @@ class BatchProcessorImpl implements Database.Batchable<SObject> {
 /**
  * @description Batch processor with exception handling for testing.
  */
-class BatchProcessorWithExceptionImpl implements Database.Batchable<SObject> {
+private class BatchProcessorWithExceptionImpl implements Database.Batchable<SObject> {
 
     /**
      * @description Start method with exception handling.
@@ -334,7 +334,7 @@ class BatchProcessorWithExceptionImpl implements Database.Batchable<SObject> {
 /**
  * @description Filtered batch processor for testing query conditions.
  */
-class BatchProcessorFilteredImpl implements Database.Batchable<SObject> {
+private class BatchProcessorFilteredImpl implements Database.Batchable<SObject> {
 
     /**
      * @description Start method with query filtering.
