@@ -33,6 +33,7 @@ private class ContactManagerTest {
 
     /**
      * @description Helper method to create a test user.
+     * @return User The created test user.
      */
     private static User createTestUser() {
         User testUser = new User(
@@ -386,7 +387,6 @@ private class ContactManagerTest {
     @IsTest
     static void testReassignContactToAnotherAccount() {
         User testUser = createTestUser();
-        Account account1 = [SELECT Id FROM Account LIMIT 1];
 
         Account account2 = new Account(Name = 'Test Account 2');
         insert account2;
@@ -494,7 +494,6 @@ private class ContactManagerTest {
     static void testBulkDeleteContacts() {
         User testUser = createTestUser();
         List<Contact> contactsToDelete = [SELECT Id FROM Contact];
-        Integer initialCount = contactsToDelete.size();
 
         Test.startTest();
         System.runAs(testUser) {

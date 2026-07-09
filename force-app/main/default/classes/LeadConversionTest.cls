@@ -69,7 +69,7 @@ private class LeadConversionTest {
             lc.setConvertedStatus('Converted');
             lc.setDoNotCreateOpportunity(true);
             
-            LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
@@ -97,7 +97,7 @@ private class LeadConversionTest {
             lc.setConvertedStatus('Converted');
             lc.setDoNotCreateOpportunity(true);
             
-            LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
@@ -127,7 +127,7 @@ private class LeadConversionTest {
             lc.setConvertedStatus('Converted');
             lc.setOpportunityName(testLead.Company + ' Opportunity');
             
-            LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
@@ -185,7 +185,7 @@ private class LeadConversionTest {
             lc.setConvertedStatus('Converted');
             
             try {
-                LeadConvertResult lcr = Database.convertLead(lc);
+                Database.LeadConvertResult lcr = Database.convertLead(lc);
                 Assert.isFalse(lcr.isSuccess(), 'Conversion with invalid ID should fail');
             } catch (Exception e) {
                 Assert.isNotNull(e.getMessage(), 'Should throw exception for invalid lead ID');
@@ -215,7 +215,7 @@ private class LeadConversionTest {
             lc.setLeadId(incompleteLead.Id);
             lc.setConvertedStatus('Converted');
             
-            LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             // Verify the conversion result
@@ -244,7 +244,7 @@ private class LeadConversionTest {
             lc.setAccountId(existingAccount.Id);
             lc.setDoNotCreateOpportunity(true);
             
-            LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed with existing account');
@@ -285,7 +285,7 @@ private class LeadConversionTest {
             lc.setContactId(existingContact.Id);
             lc.setDoNotCreateOpportunity(true);
             
-            LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed with existing contact');
@@ -308,7 +308,7 @@ private class LeadConversionTest {
             lc.setConvertedStatus('Converted');
             lc.setDoNotCreateOpportunity(true);
             
-            LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion with custom status should succeed');
@@ -331,7 +331,7 @@ private class LeadConversionTest {
             lc.setConvertedStatus('Converted');
             lc.setDoNotCreateOpportunity(true);
             
-            LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
@@ -355,7 +355,7 @@ private class LeadConversionTest {
             lc.setConvertedStatus('Converted');
             lc.setDoNotCreateOpportunity(true);
             
-            LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
@@ -379,7 +379,7 @@ private class LeadConversionTest {
             lc.setConvertedStatus('Converted');
             lc.setDoNotCreateOpportunity(true);
             
-            LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');

@@ -11,8 +11,8 @@ private class AccountHandlerTest {
      */
     private static User createTestUser() {
         Profile standardUserProfile = [
-            SELECT Id 
-            FROM Profile 
+            SELECT Id
+            FROM Profile
             WHERE Name = 'Standard User'
             LIMIT 1
         ];
@@ -30,13 +30,14 @@ private class AccountHandlerTest {
             EmailEncodingKey = 'UTF-8',
             LanguageLocaleKey = 'en_US'
         );
-        
+
         insert testUser;
         return testUser;
     }
 
     /**
      * @description Test data setup method - creates test accounts for use in test methods.
+     * @param count The number of test accounts to create
      * @return List of test Account records
      */
     private static List<Account> createTestAccounts(Integer count) {
@@ -61,20 +62,20 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             Account testAccount = new Account(
                 Name = 'Single Test Account',
                 Industry = 'Finance',
                 AnnualRevenue = 500000
             );
-            
+
             insert testAccount;
-            
+
             Test.stopTest();
 
             Account retrievedAccount = [
-                SELECT Id, Name, Industry, AnnualRevenue 
-                FROM Account 
+                SELECT Id, Name, Industry, AnnualRevenue
+                FROM Account
                 WHERE Id = :testAccount.Id
             ];
 
@@ -95,15 +96,15 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             List<Account> testAccounts = createTestAccounts(100);
             insert testAccounts;
-            
+
             Test.stopTest();
 
             List<Account> retrievedAccounts = [
-                SELECT Id, Name, Industry, AnnualRevenue, NumberOfEmployees 
-                FROM Account 
+                SELECT Id, Name, Industry, AnnualRevenue, NumberOfEmployees
+                FROM Account
                 WHERE Name LIKE 'Test Account%'
                 ORDER BY Name
             ];
@@ -124,7 +125,7 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             Account testAccount = new Account(
                 Name = 'Original Name',
                 Industry = 'Healthcare'
@@ -134,12 +135,12 @@ private class AccountHandlerTest {
             testAccount.Name = 'Updated Name';
             testAccount.AnnualRevenue = 750000;
             update testAccount;
-            
+
             Test.stopTest();
 
             Account retrievedAccount = [
-                SELECT Id, Name, AnnualRevenue 
-                FROM Account 
+                SELECT Id, Name, AnnualRevenue
+                FROM Account
                 WHERE Id = :testAccount.Id
             ];
 
@@ -158,7 +159,7 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             List<Account> testAccounts = createTestAccounts(50);
             insert testAccounts;
 
@@ -169,12 +170,12 @@ private class AccountHandlerTest {
                 accountsToUpdate.add(acc);
             }
             update accountsToUpdate;
-            
+
             Test.stopTest();
 
             List<Account> retrievedAccounts = [
-                SELECT Id, Industry, AnnualRevenue 
-                FROM Account 
+                SELECT Id, Industry, AnnualRevenue
+                FROM Account
                 WHERE Name LIKE 'Test Account%'
             ];
 
@@ -195,18 +196,18 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             Account testAccount = new Account(Name = 'Account to Delete');
             insert testAccount;
             Id accountId = testAccount.Id;
 
             delete testAccount;
-            
+
             Test.stopTest();
 
             List<Account> retrievedAccounts = [
-                SELECT Id 
-                FROM Account 
+                SELECT Id
+                FROM Account
                 WHERE Id = :accountId
             ];
 
@@ -224,17 +225,17 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             List<Account> testAccounts = createTestAccounts(30);
             insert testAccounts;
 
             delete testAccounts;
-            
+
             Test.stopTest();
 
             List<Account> retrievedAccounts = [
-                SELECT Id 
-                FROM Account 
+                SELECT Id
+                FROM Account
                 WHERE Name LIKE 'Test Account%'
             ];
 
@@ -251,7 +252,7 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             List<Account> testAccounts = new List<Account>();
             testAccounts.add(new Account(
                 Name = 'Tech Company',
@@ -271,17 +272,17 @@ private class AccountHandlerTest {
             insert testAccounts;
 
             List<Account> techAccounts = [
-                SELECT Id, Name, Industry, AnnualRevenue 
-                FROM Account 
+                SELECT Id, Name, Industry, AnnualRevenue
+                FROM Account
                 WHERE Industry = 'Technology'
             ];
 
             List<Account> highRevenueAccounts = [
-                SELECT Id, Name, AnnualRevenue 
-                FROM Account 
+                SELECT Id, Name, AnnualRevenue
+                FROM Account
                 WHERE AnnualRevenue > 5000000
             ];
-            
+
             Test.stopTest();
 
             Assert.areEqual(1, techAccounts.size());
@@ -301,7 +302,7 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             Account newAccount = new Account(Name = 'Upsert Test Account', Industry = 'Technology');
             insert newAccount;
 
@@ -310,19 +311,19 @@ private class AccountHandlerTest {
             upsertAccounts.add(new Account(Name = 'Brand New Account', Industry = 'Retail'));
 
             upsert upsertAccounts;
-            
+
             Test.stopTest();
 
             Account updatedAccount = [
-                SELECT Id, AnnualRevenue 
-                FROM Account 
+                SELECT Id, AnnualRevenue
+                FROM Account
                 WHERE Id = :newAccount.Id
             ];
             Assert.areEqual(1500000, updatedAccount.AnnualRevenue);
 
             List<Account> newAccounts = [
-                SELECT Id, Name 
-                FROM Account 
+                SELECT Id, Name
+                FROM Account
                 WHERE Name = 'Brand New Account'
             ];
             Assert.areEqual(1, newAccounts.size());
@@ -338,13 +339,13 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             List<Account> testAccounts = createTestAccounts(200);
             insert testAccounts;
 
             List<Account> queriedAccounts = [
-                SELECT Id, Name, Industry 
-                FROM Account 
+                SELECT Id, Name, Industry
+                FROM Account
                 WHERE Name LIKE 'Test Account%'
             ];
 
@@ -356,12 +357,12 @@ private class AccountHandlerTest {
             update accountsToUpdate;
 
             delete queriedAccounts;
-            
+
             Test.stopTest();
 
             List<Account> finalCheck = [
-                SELECT Id 
-                FROM Account 
+                SELECT Id
+                FROM Account
                 WHERE Name LIKE 'Test Account%'
             ];
 
@@ -378,17 +379,17 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             List<Account> testAccounts = createTestAccounts(25);
             insert testAccounts;
 
             List<Account> limitedAccounts = [
-                SELECT Id, Name 
-                FROM Account 
+                SELECT Id, Name
+                FROM Account
                 WHERE Name LIKE 'Test Account%'
                 LIMIT 10
             ];
-            
+
             Test.stopTest();
 
             Assert.areEqual(10, limitedAccounts.size());
@@ -404,7 +405,7 @@ private class AccountHandlerTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            
+
             Account accountWithNulls = new Account(
                 Name = 'Null Test Account',
                 Industry = null,
@@ -413,11 +414,11 @@ private class AccountHandlerTest {
             insert accountWithNulls;
 
             Account retrievedAccount = [
-                SELECT Id, Name, Industry, AnnualRevenue 
-                FROM Account 
+                SELECT Id, Name, Industry, AnnualRevenue
+                FROM Account
                 WHERE Id = :accountWithNulls.Id
             ];
-            
+
             Test.stopTest();
 
             Assert.areEqual('Null Test Account', retrievedAccount.Name);
