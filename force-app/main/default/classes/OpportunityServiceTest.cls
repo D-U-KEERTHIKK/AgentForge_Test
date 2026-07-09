@@ -116,9 +116,7 @@ private class OpportunityServiceTest {
                 Amount = 35000
             ));
             
-            Test.startTest();
             insert oppsToCreate;
-            Test.stopTest();
             
             List<Opportunity> allOpps = [SELECT Id, Amount FROM Opportunity WHERE AccountId = :testAccount.Id];
             Decimal totalRevenue = calculateRevenue(allOpps);
@@ -158,9 +156,7 @@ private class OpportunityServiceTest {
                 CloseDate = Date.today().addDays(30)
             );
             
-            Test.startTest();
             insert oppNoAmount;
-            Test.stopTest();
             
             List<Opportunity> opps = [SELECT Id, Amount FROM Opportunity WHERE Name = 'No Amount Opp'];
             Decimal revenue = calculateRevenue(opps);
@@ -329,10 +325,8 @@ private class OpportunityServiceTest {
         System.runAs(testUser) {
             Opportunity opp = [SELECT Id, StageName FROM Opportunity LIMIT 1];
             
-            Test.startTest();
             opp.StageName = 'Qualification';
             update opp;
-            Test.stopTest();
             
             Opportunity updatedOpp = [SELECT Id, StageName FROM Opportunity WHERE Id = :opp.Id];
             Assert.areEqual('Qualification', updatedOpp.StageName);
@@ -366,10 +360,8 @@ private class OpportunityServiceTest {
             ));
             insert oppsToCreate;
             
-            Test.startTest();
             List<Opportunity> allOpps = [SELECT Id, StageName FROM Opportunity WHERE AccountId = :testAccount.Id];
             List<Opportunity> prospectingOpps = filterByStage(allOpps, 'Prospecting');
-            Test.stopTest();
             
             Assert.areEqual(2, prospectingOpps.size());
         }
