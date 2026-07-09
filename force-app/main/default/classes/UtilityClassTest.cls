@@ -38,15 +38,15 @@ private class UtilityClassTest {
         System.runAs(testUser) {
             // Test capitalize string
             String input = 'hello world';
-            String result = UtilityClassStub.capitalize(input);
+            String result = UtilityClass.capitalize(input);
             Assert.areEqual('Hello world', result);
             
             // Test with empty string
-            String emptyResult = UtilityClassStub.capitalize('');
+            String emptyResult = UtilityClass.capitalize('');
             Assert.areEqual('', emptyResult);
             
             // Test with single character
-            String singleChar = UtilityClassStub.capitalize('a');
+            String singleChar = UtilityClass.capitalize('a');
             Assert.areEqual('A', singleChar);
         }
     }
@@ -60,15 +60,15 @@ private class UtilityClassTest {
         
         System.runAs(testUser) {
             String input = '  test string  ';
-            String result = UtilityClassStub.trimWhitespace(input);
+            String result = UtilityClass.trimWhitespace(input);
             Assert.areEqual('test string', result);
             
             // Test with no whitespace
-            String noSpace = UtilityClassStub.trimWhitespace('test');
+            String noSpace = UtilityClass.trimWhitespace('test');
             Assert.areEqual('test', noSpace);
             
             // Test with null
-            String nullResult = UtilityClassStub.trimWhitespace(null);
+            String nullResult = UtilityClass.trimWhitespace(null);
             Assert.isNull(nullResult);
         }
     }
@@ -82,13 +82,13 @@ private class UtilityClassTest {
         
         System.runAs(testUser) {
             // Test isValidEmail
-            Boolean validEmail = UtilityClassStub.isValidEmail('test@example.com');
+            Boolean validEmail = UtilityClass.isValidEmail('test@example.com');
             Assert.isTrue(validEmail);
             
-            Boolean invalidEmail = UtilityClassStub.isValidEmail('invalid.email');
+            Boolean invalidEmail = UtilityClass.isValidEmail('invalid.email');
             Assert.isFalse(invalidEmail);
             
-            Boolean emptyEmail = UtilityClassStub.isValidEmail('');
+            Boolean emptyEmail = UtilityClass.isValidEmail('');
             Assert.isFalse(emptyEmail);
         }
     }
@@ -102,7 +102,7 @@ private class UtilityClassTest {
         
         System.runAs(testUser) {
             List<Integer> numbers = new List<Integer> { 1, 2, 3, 4, 5, 6 };
-            List<Integer> evenNumbers = UtilityClassStub.filterEvenNumbers(numbers);
+            List<Integer> evenNumbers = UtilityClass.filterEvenNumbers(numbers);
             
             Assert.areEqual(3, evenNumbers.size());
             Assert.isTrue(evenNumbers.contains(2));
@@ -120,7 +120,7 @@ private class UtilityClassTest {
         
         System.runAs(testUser) {
             List<String> items = new List<String> { 'apple', 'banana', 'apple', 'cherry', 'banana' };
-            List<String> uniqueItems = UtilityClassStub.removeDuplicates(items);
+            List<String> uniqueItems = UtilityClass.removeDuplicates(items);
             
             Assert.areEqual(3, uniqueItems.size());
             Assert.isTrue(uniqueItems.contains('apple'));
@@ -139,11 +139,11 @@ private class UtilityClassTest {
         System.runAs(testUser) {
             // Test with empty list
             List<String> emptyList = new List<String>();
-            List<String> emptyResult = UtilityClassStub.removeDuplicates(emptyList);
+            List<String> emptyResult = UtilityClass.removeDuplicates(emptyList);
             Assert.areEqual(0, emptyResult.size());
             
             // Test with null list
-            List<String> nullResult = UtilityClassStub.removeDuplicates(null);
+            List<String> nullResult = UtilityClass.removeDuplicates(null);
             Assert.isNull(nullResult);
         }
     }
@@ -159,11 +159,11 @@ private class UtilityClassTest {
             Date testDate = Date.newInstance(2024, 1, 15);
             
             // Test adding days
-            Date futureDate = UtilityClassStub.addDays(testDate, 10);
+            Date futureDate = UtilityClass.addDays(testDate, 10);
             Assert.areEqual(Date.newInstance(2024, 1, 25), futureDate);
             
             // Test subtracting days
-            Date pastDate = UtilityClassStub.addDays(testDate, -5);
+            Date pastDate = UtilityClass.addDays(testDate, -5);
             Assert.areEqual(Date.newInstance(2024, 1, 10), pastDate);
         }
     }
@@ -179,7 +179,7 @@ private class UtilityClassTest {
             Date startDate = Date.newInstance(2024, 1, 1);
             Date endDate = Date.newInstance(2024, 1, 31);
             
-            Integer daysDifference = UtilityClassStub.daysBetween(startDate, endDate);
+            Integer daysDifference = UtilityClass.daysBetween(startDate, endDate);
             Assert.areEqual(30, daysDifference);
         }
     }
@@ -193,7 +193,7 @@ private class UtilityClassTest {
         
         System.runAs(testUser) {
             Date testDate = Date.newInstance(2024, 1, 15);
-            Integer difference = UtilityClassStub.daysBetween(testDate, testDate);
+            Integer difference = UtilityClass.daysBetween(testDate, testDate);
             Assert.areEqual(0, difference);
         }
     }
@@ -206,13 +206,13 @@ private class UtilityClassTest {
         User testUser = [SELECT Id FROM User WHERE Alias = 'testuser' LIMIT 1];
         
         System.runAs(testUser) {
-            Boolean isLeap2024 = UtilityClassStub.isLeapYear(2024);
+            Boolean isLeap2024 = UtilityClass.isLeapYear(2024);
             Assert.isTrue(isLeap2024);
             
-            Boolean isLeap2023 = UtilityClassStub.isLeapYear(2023);
+            Boolean isLeap2023 = UtilityClass.isLeapYear(2023);
             Assert.isFalse(isLeap2023);
             
-            Boolean isLeap2000 = UtilityClassStub.isLeapYear(2000);
+            Boolean isLeap2000 = UtilityClass.isLeapYear(2000);
             Assert.isTrue(isLeap2000);
         }
     }
@@ -225,10 +225,10 @@ private class UtilityClassTest {
         User testUser = [SELECT Id FROM User WHERE Alias = 'testuser' LIMIT 1];
         
         System.runAs(testUser) {
-            String result = UtilityClassStub.safeToString(null);
+            String result = UtilityClass.safeToString(null);
             Assert.areEqual('', result);
             
-            String nonNullResult = UtilityClassStub.safeToString('test');
+            String nonNullResult = UtilityClass.safeToString('test');
             Assert.areEqual('test', nonNullResult);
         }
     }
@@ -244,15 +244,15 @@ private class UtilityClassTest {
             List<String> items = new List<String> { 'first', 'second', 'third' };
             
             // Valid index
-            String firstItem = UtilityClassStub.safeListGet(items, 0);
+            String firstItem = UtilityClass.safeListGet(items, 0);
             Assert.areEqual('first', firstItem);
             
             // Out of bounds index
-            String outOfBounds = UtilityClassStub.safeListGet(items, 10);
+            String outOfBounds = UtilityClass.safeListGet(items, 10);
             Assert.isNull(outOfBounds);
             
             // Null list
-            String nullListResult = UtilityClassStub.safeListGet(null, 0);
+            String nullListResult = UtilityClass.safeListGet(null, 0);
             Assert.isNull(nullListResult);
         }
     }
@@ -265,13 +265,13 @@ private class UtilityClassTest {
         User testUser = [SELECT Id FROM User WHERE Alias = 'testuser' LIMIT 1];
         
         System.runAs(testUser) {
-            Integer validInt = UtilityClassStub.safeParseInt('123');
+            Integer validInt = UtilityClass.safeParseInt('123');
             Assert.areEqual(123, validInt);
             
-            Integer invalidInt = UtilityClassStub.safeParseInt('not a number');
+            Integer invalidInt = UtilityClass.safeParseInt('not a number');
             Assert.areEqual(0, invalidInt);
             
-            Integer nullInt = UtilityClassStub.safeParseInt(null);
+            Integer nullInt = UtilityClass.safeParseInt(null);
             Assert.areEqual(0, nullInt);
         }
     }
@@ -284,13 +284,13 @@ private class UtilityClassTest {
         User testUser = [SELECT Id FROM User WHERE Alias = 'testuser' LIMIT 1];
         
         System.runAs(testUser) {
-            Decimal validDecimal = UtilityClassStub.safeParseDecimal('123.45');
+            Decimal validDecimal = UtilityClass.safeParseDecimal('123.45');
             Assert.areEqual(123.45, validDecimal);
             
-            Decimal invalidDecimal = UtilityClassStub.safeParseDecimal('invalid');
+            Decimal invalidDecimal = UtilityClass.safeParseDecimal('invalid');
             Assert.areEqual(0.0, invalidDecimal);
             
-            Decimal nullDecimal = UtilityClassStub.safeParseDecimal(null);
+            Decimal nullDecimal = UtilityClass.safeParseDecimal(null);
             Assert.areEqual(0.0, nullDecimal);
         }
     }
@@ -307,10 +307,10 @@ private class UtilityClassTest {
             testMap.put('key1', 'value1');
             testMap.put('key2', 'value2');
             
-            String value = UtilityClassStub.safeMapGet(testMap, 'key1');
+            String value = UtilityClass.safeMapGet(testMap, 'key1');
             Assert.areEqual('value1', value);
             
-            String missingKey = UtilityClassStub.safeMapGet(testMap, 'missing');
+            String missingKey = UtilityClass.safeMapGet(testMap, 'missing');
             Assert.isNull(missingKey);
         }
     }
@@ -324,10 +324,10 @@ private class UtilityClassTest {
         
         System.runAs(testUser) {
             Decimal decimalValue = 123.4567;
-            Decimal rounded = UtilityClassStub.roundDecimal(decimalValue, 2);
+            Decimal rounded = UtilityClass.roundDecimal(decimalValue, 2);
             Assert.areEqual(123.46, rounded);
             
-            Decimal roundedToZero = UtilityClassStub.roundDecimal(decimalValue, 0);
+            Decimal roundedToZero = UtilityClass.roundDecimal(decimalValue, 0);
             Assert.areEqual(123, roundedToZero);
         }
     }
@@ -340,10 +340,10 @@ private class UtilityClassTest {
         User testUser = [SELECT Id FROM User WHERE Alias = 'testuser' LIMIT 1];
         
         System.runAs(testUser) {
-            Decimal percentage = UtilityClassStub.calculatePercentage(50, 200);
+            Decimal percentage = UtilityClass.calculatePercentage(50, 200);
             Assert.areEqual(25.0, percentage);
             
-            Decimal zeroPercentage = UtilityClassStub.calculatePercentage(0, 100);
+            Decimal zeroPercentage = UtilityClass.calculatePercentage(0, 100);
             Assert.areEqual(0.0, zeroPercentage);
         }
     }
@@ -356,7 +356,7 @@ private class UtilityClassTest {
         User testUser = [SELECT Id FROM User WHERE Alias = 'testuser' LIMIT 1];
         
         System.runAs(testUser) {
-            Decimal result = UtilityClassStub.calculatePercentage(50, 0);
+            Decimal result = UtilityClass.calculatePercentage(50, 0);
             Assert.areEqual(0.0, result);
         }
     }
@@ -370,7 +370,7 @@ private class UtilityClassTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            List<Account> accounts = UtilityClassStub.createTestAccounts(5);
+            List<Account> accounts = UtilityClass.createTestAccounts(5);
             Test.stopTest();
             
             Assert.areEqual(5, accounts.size());
@@ -389,13 +389,13 @@ private class UtilityClassTest {
         User testUser = [SELECT Id FROM User WHERE Alias = 'testuser' LIMIT 1];
         
         System.runAs(testUser) {
-            String repeated = UtilityClassStub.repeatString('ab', 3);
+            String repeated = UtilityClass.repeatString('ab', 3);
             Assert.areEqual('ababab', repeated);
             
-            String singleRepeat = UtilityClassStub.repeatString('x', 1);
+            String singleRepeat = UtilityClass.repeatString('x', 1);
             Assert.areEqual('x', singleRepeat);
             
-            String zeroRepeat = UtilityClassStub.repeatString('test', 0);
+            String zeroRepeat = UtilityClass.repeatString('test', 0);
             Assert.areEqual('', zeroRepeat);
         }
     }
@@ -408,13 +408,13 @@ private class UtilityClassTest {
         User testUser = [SELECT Id FROM User WHERE Alias = 'testuser' LIMIT 1];
         
         System.runAs(testUser) {
-            Boolean contains = UtilityClassStub.containsCaseInsensitive('Hello World', 'hello');
+            Boolean contains = UtilityClass.containsCaseInsensitive('Hello World', 'hello');
             Assert.isTrue(contains);
             
-            Boolean doesNotContain = UtilityClassStub.containsCaseInsensitive('Hello World', 'xyz');
+            Boolean doesNotContain = UtilityClass.containsCaseInsensitive('Hello World', 'xyz');
             Assert.isFalse(doesNotContain);
             
-            Boolean nullCheck = UtilityClassStub.containsCaseInsensitive(null, 'test');
+            Boolean nullCheck = UtilityClass.containsCaseInsensitive(null, 'test');
             Assert.isFalse(nullCheck);
         }
     }
