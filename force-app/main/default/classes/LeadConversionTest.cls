@@ -54,26 +54,34 @@ private class LeadConversionTest {
     }
 
     /**
+     * @description Helper method to perform standard lead conversion.
+     */
+    private static Database.LeadConvertResult convertLeadStandard(Lead testLead, Boolean createOpportunity) {
+        Database.LeadConvert lc = new Database.LeadConvert();
+        lc.setLeadId(testLead.Id);
+        lc.setConvertedStatus('Converted');
+        if (!createOpportunity) {
+            lc.setDoNotCreateOpportunity(true);
+        }
+        return Database.convertLead(lc);
+    }
+
+    /**
      * @description Test successful lead conversion with account and contact creation.
      */
     @IsTest
     static void testLeadConversionCreateAccount() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             Lead testLead = [SELECT Id, FirstName, LastName, Company, Email, Phone FROM Lead WHERE Email = 'john.doe@acme.com' LIMIT 1];
-            
+
             Test.startTest();
-            Database.LeadConvert lc = new Database.LeadConvert();
-            lc.setLeadId(testLead.Id);
-            lc.setConvertedStatus('Converted');
-            lc.setDoNotCreateOpportunity(true);
-            
-            Database.LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = convertLeadStandard(testLead, false);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
-            
+
             // Verify account was created
             List<Account> accounts = [SELECT Id, Name FROM Account WHERE Name = 'Acme Corp'];
             Assert.areEqual(1, accounts.size(), 'Account should be created for lead');
@@ -87,23 +95,18 @@ private class LeadConversionTest {
     @IsTest
     static void testLeadConversionCreateContact() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             Lead testLead = [SELECT Id, FirstName, LastName, Company, Email, Phone FROM Lead WHERE Email = 'jane.smith@tech.com' LIMIT 1];
-            
+
             Test.startTest();
-            Database.LeadConvert lc = new Database.LeadConvert();
-            lc.setLeadId(testLead.Id);
-            lc.setConvertedStatus('Converted');
-            lc.setDoNotCreateOpportunity(true);
-            
-            Database.LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = convertLeadStandard(testLead, false);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
-            
+
             // Verify contact was created
-            List<Contact> contacts = [SELECT Id, FirstName, LastName, Email, Phone FROM Contact 
+            List<Contact> contacts = [SELECT Id, FirstName, LastName, Email, Phone FROM Contact
                                       WHERE Email = 'jane.smith@tech.com'];
             Assert.areEqual(1, contacts.size(), 'Contact should be created for lead');
             Assert.areEqual('Jane', contacts[0].FirstName, 'Contact first name should match lead');
@@ -117,23 +120,23 @@ private class LeadConversionTest {
     @IsTest
     static void testLeadConversionCreateOpportunity() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             Lead testLead = [SELECT Id, FirstName, LastName, Company, Email, Phone FROM Lead WHERE Email = 'john.doe@acme.com' LIMIT 1];
-            
+
             Test.startTest();
             Database.LeadConvert lc = new Database.LeadConvert();
             lc.setLeadId(testLead.Id);
             lc.setConvertedStatus('Converted');
             lc.setOpportunityName(testLead.Company + ' Opportunity');
-            
+
             Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
-            
+
             // Verify opportunity was created
-            List<Opportunity> opportunities = [SELECT Id, Name FROM Opportunity 
+            List<Opportunity> opportunities = [SELECT Id, Name FROM Opportunity
                                               WHERE Name = 'Acme Corp Opportunity'];
             Assert.areEqual(1, opportunities.size(), 'Opportunity should be created for lead');
         }
@@ -145,10 +148,10 @@ private class LeadConversionTest {
     @IsTest
     static void testBulkLeadConversion() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             List<Lead> testLeads = [SELECT Id, FirstName, LastName, Company, Email, Phone FROM Lead];
-            
+
             Test.startTest();
             List<Database.LeadConvert> leadConverts = new List<Database.LeadConvert>();
             for (Lead lead : testLeads) {
@@ -158,7 +161,7 @@ private class LeadConversionTest {
                 lc.setDoNotCreateOpportunity(true);
                 leadConverts.add(lc);
             }
-            
+
             List<Database.LeadConvertResult> lcResults = Database.convertLead(leadConverts, false);
             Test.stopTest();
 
@@ -175,15 +178,15 @@ private class LeadConversionTest {
     @IsTest
     static void testLeadConversionInvalidLeadId() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             Id invalidLeadId = '00Q000000000000AAA';
-            
+
             Test.startTest();
             Database.LeadConvert lc = new Database.LeadConvert();
             lc.setLeadId(invalidLeadId);
             lc.setConvertedStatus('Converted');
-            
+
             try {
                 Database.LeadConvertResult lcr = Database.convertLead(lc);
                 Assert.isFalse(lcr.isSuccess(), 'Conversion with invalid ID should fail');
@@ -200,7 +203,7 @@ private class LeadConversionTest {
     @IsTest
     static void testLeadConversionValidationErrors() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             // Create lead with missing required fields
             Lead incompleteLead = new Lead(
@@ -209,12 +212,12 @@ private class LeadConversionTest {
                 // Missing Company field
             );
             insert incompleteLead;
-            
+
             Test.startTest();
             Database.LeadConvert lc = new Database.LeadConvert();
             lc.setLeadId(incompleteLead.Id);
             lc.setConvertedStatus('Converted');
-            
+
             Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
@@ -229,26 +232,26 @@ private class LeadConversionTest {
     @IsTest
     static void testLeadConversionDuplicateAccount() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             // Create an existing account
             Account existingAccount = new Account(Name = 'Acme Corp');
             insert existingAccount;
-            
+
             Lead testLead = [SELECT Id, FirstName, LastName, Company, Email, Phone FROM Lead WHERE Email = 'john.doe@acme.com' LIMIT 1];
-            
+
             Test.startTest();
             Database.LeadConvert lc = new Database.LeadConvert();
             lc.setLeadId(testLead.Id);
             lc.setConvertedStatus('Converted');
             lc.setAccountId(existingAccount.Id);
             lc.setDoNotCreateOpportunity(true);
-            
+
             Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed with existing account');
-            
+
             // Verify only one account exists
             List<Account> accounts = [SELECT Id, Name FROM Account WHERE Name = 'Acme Corp'];
             Assert.areEqual(1, accounts.size(), 'Should not create duplicate account');
@@ -261,11 +264,11 @@ private class LeadConversionTest {
     @IsTest
     static void testLeadConversionDuplicateContact() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             Account testAccount = new Account(Name = 'Test Account');
             insert testAccount;
-            
+
             // Create existing contact
             Contact existingContact = new Contact(
                 FirstName = 'John',
@@ -274,9 +277,9 @@ private class LeadConversionTest {
                 AccountId = testAccount.Id
             );
             insert existingContact;
-            
+
             Lead testLead = [SELECT Id, FirstName, LastName, Company, Email, Phone FROM Lead WHERE Email = 'john.doe@acme.com' LIMIT 1];
-            
+
             Test.startTest();
             Database.LeadConvert lc = new Database.LeadConvert();
             lc.setLeadId(testLead.Id);
@@ -284,7 +287,7 @@ private class LeadConversionTest {
             lc.setAccountId(testAccount.Id);
             lc.setContactId(existingContact.Id);
             lc.setDoNotCreateOpportunity(true);
-            
+
             Database.LeadConvertResult lcr = Database.convertLead(lc);
             Test.stopTest();
 
@@ -298,17 +301,12 @@ private class LeadConversionTest {
     @IsTest
     static void testLeadConversionCustomStatus() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             Lead testLead = [SELECT Id, FirstName, LastName, Company, Email, Phone FROM Lead WHERE Email = 'jane.smith@tech.com' LIMIT 1];
-            
+
             Test.startTest();
-            Database.LeadConvert lc = new Database.LeadConvert();
-            lc.setLeadId(testLead.Id);
-            lc.setConvertedStatus('Converted');
-            lc.setDoNotCreateOpportunity(true);
-            
-            Database.LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = convertLeadStandard(testLead, false);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion with custom status should succeed');
@@ -321,17 +319,12 @@ private class LeadConversionTest {
     @IsTest
     static void testLeadConversionResultAccountId() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             Lead testLead = [SELECT Id, FirstName, LastName, Company, Email, Phone FROM Lead WHERE Email = 'john.doe@acme.com' LIMIT 1];
-            
+
             Test.startTest();
-            Database.LeadConvert lc = new Database.LeadConvert();
-            lc.setLeadId(testLead.Id);
-            lc.setConvertedStatus('Converted');
-            lc.setDoNotCreateOpportunity(true);
-            
-            Database.LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = convertLeadStandard(testLead, false);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
@@ -345,17 +338,12 @@ private class LeadConversionTest {
     @IsTest
     static void testLeadConversionResultContactId() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             Lead testLead = [SELECT Id, FirstName, LastName, Company, Email, Phone FROM Lead WHERE Email = 'jane.smith@tech.com' LIMIT 1];
-            
+
             Test.startTest();
-            Database.LeadConvert lc = new Database.LeadConvert();
-            lc.setLeadId(testLead.Id);
-            lc.setConvertedStatus('Converted');
-            lc.setDoNotCreateOpportunity(true);
-            
-            Database.LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = convertLeadStandard(testLead, false);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
@@ -369,21 +357,16 @@ private class LeadConversionTest {
     @IsTest
     static void testLeadMarkedAsConverted() {
         User testUser = createTestUser();
-        
+
         System.runAs(testUser) {
             Lead testLead = [SELECT Id, FirstName, LastName, Company, Email, Phone FROM Lead WHERE Email = 'john.doe@acme.com' LIMIT 1];
-            
+
             Test.startTest();
-            Database.LeadConvert lc = new Database.LeadConvert();
-            lc.setLeadId(testLead.Id);
-            lc.setConvertedStatus('Converted');
-            lc.setDoNotCreateOpportunity(true);
-            
-            Database.LeadConvertResult lcr = Database.convertLead(lc);
+            Database.LeadConvertResult lcr = convertLeadStandard(testLead, false);
             Test.stopTest();
 
             Assert.isTrue(lcr.isSuccess(), 'Lead conversion should succeed');
-            
+
             // Verify lead is marked as converted
             Lead convertedLead = [SELECT Id, IsConverted, ConvertedAccountId FROM Lead WHERE Id = :testLead.Id];
             Assert.isTrue(convertedLead.IsConverted, 'Lead should be marked as converted');

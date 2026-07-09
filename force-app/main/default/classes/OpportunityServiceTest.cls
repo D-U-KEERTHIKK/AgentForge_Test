@@ -26,6 +26,7 @@ private class OpportunityServiceTest {
     
     /**
      * @description Create test user with standard profile
+     * @return User test user with standard profile
      */
     private static User createTestUser() {
         Profile standardProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
@@ -479,6 +480,11 @@ private class OpportunityServiceTest {
         }
     }
 
+    /**
+     * @description Calculate total revenue from list of opportunities
+     * @param opps List of opportunities to sum
+     * @return Decimal total revenue from all opportunities
+     */
     private static Decimal calculateRevenue(List<Opportunity> opps) {
         Decimal totalRevenue = 0;
         for (Opportunity opp : opps) {
@@ -489,6 +495,12 @@ private class OpportunityServiceTest {
         return totalRevenue;
     }
 
+    /**
+     * @description Validate if stage transition is allowed
+     * @param fromStage Current opportunity stage
+     * @param toStage Target opportunity stage
+     * @return Boolean true if transition is valid
+     */
     private static Boolean isValidStageTransition(String fromStage, String toStage) {
         Map<String, List<String>> validTransitions = new Map<String, List<String>>{
             'Prospecting' => new List<String>{'Qualification'},
@@ -504,6 +516,11 @@ private class OpportunityServiceTest {
         return validTransitions.get(fromStage).contains(toStage);
     }
 
+    /**
+     * @description Validate if close date is valid
+     * @param closeDate Date to validate
+     * @return Boolean true if close date is today or in future
+     */
     private static Boolean isValidCloseDate(Date closeDate) {
         if (closeDate == null) {
             return false;
@@ -511,6 +528,12 @@ private class OpportunityServiceTest {
         return closeDate >= Date.today();
     }
 
+    /**
+     * @description Filter opportunities by stage name
+     * @param opps List of opportunities to filter
+     * @param stage Stage name to filter by
+     * @return List of opportunities matching the stage
+     */
     private static List<Opportunity> filterByStage(List<Opportunity> opps, String stage) {
         List<Opportunity> filtered = new List<Opportunity>();
         for (Opportunity opp : opps) {
@@ -521,6 +544,11 @@ private class OpportunityServiceTest {
         return filtered;
     }
 
+    /**
+     * @description Validate if amount is valid
+     * @param amount Amount to validate
+     * @return Boolean true if amount is positive
+     */
     private static Boolean isValidAmount(Decimal amount) {
         if (amount == null) {
             return false;
