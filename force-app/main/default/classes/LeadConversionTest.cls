@@ -55,6 +55,9 @@ private class LeadConversionTest {
 
     /**
      * @description Helper method to perform standard lead conversion.
+     * @param testLead The lead to convert.
+     * @param createOpportunity Whether to create an opportunity during conversion.
+     * @return Database.LeadConvertResult The result of the lead conversion operation.
      */
     private static Database.LeadConvertResult convertLeadStandard(Lead testLead, Boolean createOpportunity) {
         Database.LeadConvert lc = new Database.LeadConvert();
