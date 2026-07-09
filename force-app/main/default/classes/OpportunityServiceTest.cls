@@ -84,9 +84,7 @@ private class OpportunityServiceTest {
         System.runAs(testUser) {
             Opportunity opp = [SELECT Id, Amount FROM Opportunity LIMIT 1];
             
-            Test.startTest();
             Decimal revenue = calculateRevenue(new List<Opportunity> { opp });
-            Test.stopTest();
             
             Assert.areEqual(50000, revenue);
         }
@@ -120,9 +118,10 @@ private class OpportunityServiceTest {
             
             Test.startTest();
             insert oppsToCreate;
+            Test.stopTest();
+            
             List<Opportunity> allOpps = [SELECT Id, Amount FROM Opportunity WHERE AccountId = :testAccount.Id];
             Decimal totalRevenue = calculateRevenue(allOpps);
-            Test.stopTest();
             
             Assert.areEqual(110000, totalRevenue);
         }
@@ -136,9 +135,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Decimal revenue = calculateRevenue(new List<Opportunity>());
-            Test.stopTest();
             
             Assert.areEqual(0, revenue);
         }
@@ -163,9 +160,10 @@ private class OpportunityServiceTest {
             
             Test.startTest();
             insert oppNoAmount;
+            Test.stopTest();
+            
             List<Opportunity> opps = [SELECT Id, Amount FROM Opportunity WHERE Name = 'No Amount Opp'];
             Decimal revenue = calculateRevenue(opps);
-            Test.stopTest();
             
             Assert.areEqual(0, revenue);
         }
@@ -183,9 +181,7 @@ private class OpportunityServiceTest {
             opp.StageName = 'Prospecting';
             update opp;
             
-            Test.startTest();
             Boolean isValid = isValidStageTransition('Prospecting', 'Qualification');
-            Test.stopTest();
             
             Assert.isTrue(isValid);
         }
@@ -199,9 +195,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Boolean isValid = isValidStageTransition('Qualification', 'Negotiation/Review');
-            Test.stopTest();
             
             Assert.isTrue(isValid);
         }
@@ -215,9 +209,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Boolean isValid = isValidStageTransition('Negotiation/Review', 'Closed Won');
-            Test.stopTest();
             
             Assert.isTrue(isValid);
         }
@@ -231,9 +223,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Boolean isValid = isValidStageTransition('Closed Won', 'Prospecting');
-            Test.stopTest();
             
             Assert.isFalse(isValid);
         }
@@ -247,9 +237,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Boolean isValid = isValidStageTransition('Qualification', 'Prospecting');
-            Test.stopTest();
             
             Assert.isFalse(isValid);
         }
@@ -263,9 +251,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Boolean isValid = isValidStageTransition('Closed Lost', 'Qualification');
-            Test.stopTest();
             
             Assert.isFalse(isValid);
         }
@@ -281,9 +267,7 @@ private class OpportunityServiceTest {
         System.runAs(testUser) {
             Date futureDate = Date.today().addDays(30);
             
-            Test.startTest();
             Boolean isValid = isValidCloseDate(futureDate);
-            Test.stopTest();
             
             Assert.isTrue(isValid);
         }
@@ -299,9 +283,7 @@ private class OpportunityServiceTest {
         System.runAs(testUser) {
             Date todayDate = Date.today();
             
-            Test.startTest();
             Boolean isValid = isValidCloseDate(todayDate);
-            Test.stopTest();
             
             Assert.isTrue(isValid);
         }
@@ -317,9 +299,7 @@ private class OpportunityServiceTest {
         System.runAs(testUser) {
             Date pastDate = Date.today().addDays(-1);
             
-            Test.startTest();
             Boolean isValid = isValidCloseDate(pastDate);
-            Test.stopTest();
             
             Assert.isFalse(isValid);
         }
@@ -333,9 +313,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Boolean isValid = isValidCloseDate(null);
-            Test.stopTest();
             
             Assert.isFalse(isValid);
         }
@@ -407,10 +385,8 @@ private class OpportunityServiceTest {
         System.runAs(testUser) {
             Account testAccount = [SELECT Id FROM Account LIMIT 1];
             
-            Test.startTest();
             List<Opportunity> allOpps = [SELECT Id, StageName FROM Opportunity WHERE AccountId = :testAccount.Id];
             List<Opportunity> closedWonOpps = filterByStage(allOpps, 'Closed Won');
-            Test.stopTest();
             
             Assert.areEqual(0, closedWonOpps.size());
         }
@@ -424,9 +400,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Boolean isValid = isValidAmount(50000);
-            Test.stopTest();
             
             Assert.isTrue(isValid);
         }
@@ -440,9 +414,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Boolean isValid = isValidAmount(0);
-            Test.stopTest();
             
             Assert.isFalse(isValid);
         }
@@ -456,9 +428,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Boolean isValid = isValidAmount(-50000);
-            Test.stopTest();
             
             Assert.isFalse(isValid);
         }
@@ -472,9 +442,7 @@ private class OpportunityServiceTest {
         User testUser = createTestUser();
         
         System.runAs(testUser) {
-            Test.startTest();
             Boolean isValid = isValidAmount(null);
-            Test.stopTest();
             
             Assert.isFalse(isValid);
         }

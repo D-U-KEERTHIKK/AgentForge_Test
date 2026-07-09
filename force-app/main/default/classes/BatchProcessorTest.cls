@@ -244,7 +244,7 @@ private class BatchProcessorTest {
 /**
  * @description Batch processor implementation for testing.
  */
-private class BatchProcessorImpl implements Database.Batchable<SObject> {
+class BatchProcessorImpl implements Database.Batchable<SObject> {
 
     /**
      * @description Batch start method to define query scope.
@@ -288,7 +288,7 @@ private class BatchProcessorImpl implements Database.Batchable<SObject> {
 /**
  * @description Batch processor with exception handling for testing.
  */
-private class BatchProcessorWithExceptionImpl implements Database.Batchable<SObject> {
+class BatchProcessorWithExceptionImpl implements Database.Batchable<SObject> {
 
     /**
      * @description Start method with exception handling.
@@ -334,7 +334,7 @@ private class BatchProcessorWithExceptionImpl implements Database.Batchable<SObj
 /**
  * @description Filtered batch processor for testing query conditions.
  */
-private class BatchProcessorFilteredImpl implements Database.Batchable<SObject> {
+class BatchProcessorFilteredImpl implements Database.Batchable<SObject> {
 
     /**
      * @description Start method with query filtering.
