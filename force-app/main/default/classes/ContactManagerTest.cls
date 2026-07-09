@@ -69,9 +69,9 @@ private class ContactManagerTest {
         );
 
         Test.startTest();
-        System.runAs(testUser) {
-            insert newContact;
-        }
+            System.runAs(testUser) {
+                insert newContact;
+            }
         Test.stopTest();
 
         Contact insertedContact = [
@@ -102,9 +102,9 @@ private class ContactManagerTest {
         );
 
         Test.startTest();
-        System.runAs(testUser) {
-            insert contactWithoutAccount;
-        }
+            System.runAs(testUser) {
+                insert contactWithoutAccount;
+            }
         Test.stopTest();
 
         Contact insertedContact = [
@@ -125,17 +125,17 @@ private class ContactManagerTest {
         User testUser = createTestUser();
 
         Test.startTest();
-        System.runAs(testUser) {
-            List<Contact> contacts = [
-                SELECT Id, FirstName, LastName, Email, Phone, AccountId
-                FROM Contact
-                ORDER BY LastName
-            ];
+            System.runAs(testUser) {
+                List<Contact> contacts = [
+                    SELECT Id, FirstName, LastName, Email, Phone, AccountId
+                    FROM Contact
+                    ORDER BY LastName
+                ];
 
-            Assert.areEqual(2, contacts.size());
-            Assert.areEqual('Doe', contacts[0].LastName);
-            Assert.areEqual('Smith', contacts[1].LastName);
-        }
+                Assert.areEqual(2, contacts.size());
+                Assert.areEqual('Doe', contacts[0].LastName);
+                Assert.areEqual('Smith', contacts[1].LastName);
+            }
         Test.stopTest();
     }
 
@@ -149,10 +149,10 @@ private class ContactManagerTest {
         String originalEmail = contactToUpdate.Email;
 
         Test.startTest();
-        System.runAs(testUser) {
-            contactToUpdate.Email = 'john.doe.new@example.com';
-            update contactToUpdate;
-        }
+            System.runAs(testUser) {
+                contactToUpdate.Email = 'john.doe.new@example.com';
+                update contactToUpdate;
+            }
         Test.stopTest();
 
         Contact updatedContact = [SELECT Id, Email FROM Contact WHERE Id = :contactToUpdate.Id];
@@ -171,10 +171,10 @@ private class ContactManagerTest {
         String originalPhone = contactToUpdate.Phone;
 
         Test.startTest();
-        System.runAs(testUser) {
-            contactToUpdate.Phone = '555-999-8888';
-            update contactToUpdate;
-        }
+            System.runAs(testUser) {
+                contactToUpdate.Phone = '555-999-8888';
+                update contactToUpdate;
+            }
         Test.stopTest();
 
         Contact updatedContact = [SELECT Id, Phone FROM Contact WHERE Id = :contactToUpdate.Id];
@@ -193,9 +193,9 @@ private class ContactManagerTest {
         Id contactIdToDelete = contactToDelete.Id;
 
         Test.startTest();
-        System.runAs(testUser) {
-            delete contactToDelete;
-        }
+            System.runAs(testUser) {
+                delete contactToDelete;
+            }
         Test.stopTest();
 
         List<Contact> deletedContacts = [SELECT Id FROM Contact WHERE Id = :contactIdToDelete];
@@ -220,9 +220,9 @@ private class ContactManagerTest {
         );
 
         Test.startTest();
-        System.runAs(testUser) {
-            upsert newContact;
-        }
+            System.runAs(testUser) {
+                upsert newContact;
+            }
         Test.stopTest();
 
         Contact upsertedContact = [
@@ -245,9 +245,9 @@ private class ContactManagerTest {
         contactToUpsert.FirstName = 'Jonathan';
 
         Test.startTest();
-        System.runAs(testUser) {
-            upsert contactToUpsert;
-        }
+            System.runAs(testUser) {
+                upsert contactToUpsert;
+            }
         Test.stopTest();
 
         Contact upsertedContact = [SELECT Id, FirstName FROM Contact WHERE Id = :contactToUpsert.Id];
@@ -271,18 +271,18 @@ private class ContactManagerTest {
         };
 
         Test.startTest();
-        System.runAs(testUser) {
-            List<Contact> contactsToInsert = new List<Contact>();
-            for (Integer i = 0; i < validEmails.size(); i++) {
-                contactsToInsert.add(new Contact(
-                    FirstName = 'TestFirst' + i,
-                    LastName = 'TestLast' + i,
-                    Email = validEmails[i],
-                    AccountId = testAccount.Id
-                ));
+            System.runAs(testUser) {
+                List<Contact> contactsToInsert = new List<Contact>();
+                for (Integer i = 0; i < validEmails.size(); i++) {
+                    contactsToInsert.add(new Contact(
+                        FirstName = 'TestFirst' + i,
+                        LastName = 'TestLast' + i,
+                        Email = validEmails[i],
+                        AccountId = testAccount.Id
+                    ));
+                }
+                insert contactsToInsert;
             }
-            insert contactsToInsert;
-        }
         Test.stopTest();
 
         List<Contact> insertedContacts = [
@@ -308,14 +308,14 @@ private class ContactManagerTest {
         );
 
         Test.startTest();
-        System.runAs(testUser) {
-            try {
-                insert invalidEmailContact;
-                Assert.fail('Expected email validation error');
-            } catch (DmlException e) {
-                Assert.isTrue(e.getMessage().contains('INVALID_EMAIL_ADDRESS'));
+            System.runAs(testUser) {
+                try {
+                    insert invalidEmailContact;
+                    Assert.fail('Expected email validation error');
+                } catch (DmlException e) {
+                    Assert.isTrue(e.getMessage().contains('INVALID_EMAIL_ADDRESS'));
+                }
             }
-        }
         Test.stopTest();
     }
 
@@ -335,18 +335,18 @@ private class ContactManagerTest {
         };
 
         Test.startTest();
-        System.runAs(testUser) {
-            List<Contact> contactsToInsert = new List<Contact>();
-            for (Integer i = 0; i < validPhones.size(); i++) {
-                contactsToInsert.add(new Contact(
-                    FirstName = 'PhoneTest' + i,
-                    LastName = 'PhoneLast' + i,
-                    Phone = validPhones[i],
-                    AccountId = testAccount.Id
-                ));
+            System.runAs(testUser) {
+                List<Contact> contactsToInsert = new List<Contact>();
+                for (Integer i = 0; i < validPhones.size(); i++) {
+                    contactsToInsert.add(new Contact(
+                        FirstName = 'PhoneTest' + i,
+                        LastName = 'PhoneLast' + i,
+                        Phone = validPhones[i],
+                        AccountId = testAccount.Id
+                    ));
+                }
+                insert contactsToInsert;
             }
-            insert contactsToInsert;
-        }
         Test.stopTest();
 
         List<Contact> insertedContacts = [
@@ -365,19 +365,19 @@ private class ContactManagerTest {
         Account testAccount = [SELECT Id, Name FROM Account LIMIT 1];
 
         Test.startTest();
-        System.runAs(testUser) {
-            List<Contact> relatedContacts = [
-                SELECT Id, FirstName, LastName, AccountId, Account.Name
-                FROM Contact
-                WHERE AccountId = :testAccount.Id
-            ];
+            System.runAs(testUser) {
+                List<Contact> relatedContacts = [
+                    SELECT Id, FirstName, LastName, AccountId, Account.Name
+                    FROM Contact
+                    WHERE AccountId = :testAccount.Id
+                ];
 
-            Assert.areEqual(2, relatedContacts.size());
-            for (Contact contact : relatedContacts) {
-                Assert.areEqual(testAccount.Id, contact.AccountId);
-                Assert.areEqual(testAccount.Name, contact.Account.Name);
+                Assert.areEqual(2, relatedContacts.size());
+                for (Contact contact : relatedContacts) {
+                    Assert.areEqual(testAccount.Id, contact.AccountId);
+                    Assert.areEqual(testAccount.Name, contact.Account.Name);
+                }
             }
-        }
         Test.stopTest();
     }
 
@@ -395,10 +395,10 @@ private class ContactManagerTest {
         Id originalAccountId = contactToReassign.AccountId;
 
         Test.startTest();
-        System.runAs(testUser) {
-            contactToReassign.AccountId = account2.Id;
-            update contactToReassign;
-        }
+            System.runAs(testUser) {
+                contactToReassign.AccountId = account2.Id;
+                update contactToReassign;
+            }
         Test.stopTest();
 
         Contact reassignedContact = [SELECT Id, AccountId FROM Contact WHERE Id = :contactToReassign.Id];
@@ -427,9 +427,9 @@ private class ContactManagerTest {
         }
 
         Test.startTest();
-        System.runAs(testUser) {
-            insert bulkContacts;
-        }
+            System.runAs(testUser) {
+                insert bulkContacts;
+            }
         Test.stopTest();
 
         List<Contact> insertedBulkContacts = [
@@ -448,18 +448,18 @@ private class ContactManagerTest {
         Account testAccount = [SELECT Id, Name FROM Account LIMIT 1];
 
         Test.startTest();
-        System.runAs(testUser) {
-            List<Contact> contactsWithAccount = [
-                SELECT Id, FirstName, LastName, Email, Phone, AccountId, Account.Name
-                FROM Contact
-                WHERE AccountId = :testAccount.Id
-                ORDER BY LastName
-            ];
+            System.runAs(testUser) {
+                List<Contact> contactsWithAccount = [
+                    SELECT Id, FirstName, LastName, Email, Phone, AccountId, Account.Name
+                    FROM Contact
+                    WHERE AccountId = :testAccount.Id
+                    ORDER BY LastName
+                ];
 
-            Assert.areEqual(2, contactsWithAccount.size());
-            Assert.isNotNull(contactsWithAccount[0].Account);
-            Assert.areEqual(testAccount.Name, contactsWithAccount[0].Account.Name);
-        }
+                Assert.areEqual(2, contactsWithAccount.size());
+                Assert.isNotNull(contactsWithAccount[0].Account);
+                Assert.areEqual(testAccount.Name, contactsWithAccount[0].Account.Name);
+            }
         Test.stopTest();
     }
 
@@ -472,12 +472,12 @@ private class ContactManagerTest {
         List<Contact> contactsToUpdate = [SELECT Id, Phone FROM Contact];
 
         Test.startTest();
-        System.runAs(testUser) {
-            for (Contact contact : contactsToUpdate) {
-                contact.Phone = '555-000-0000';
+            System.runAs(testUser) {
+                for (Contact contact : contactsToUpdate) {
+                    contact.Phone = '555-000-0000';
+                }
+                update contactsToUpdate;
             }
-            update contactsToUpdate;
-        }
         Test.stopTest();
 
         List<Contact> updatedContacts = [SELECT Id, Phone FROM Contact];
@@ -496,9 +496,9 @@ private class ContactManagerTest {
         List<Contact> contactsToDelete = [SELECT Id FROM Contact];
 
         Test.startTest();
-        System.runAs(testUser) {
-            delete contactsToDelete;
-        }
+            System.runAs(testUser) {
+                delete contactsToDelete;
+            }
         Test.stopTest();
 
         List<Contact> remainingContacts = [SELECT Id FROM Contact];
