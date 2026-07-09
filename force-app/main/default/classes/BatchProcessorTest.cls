@@ -49,7 +49,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Id batchJobId = Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -78,7 +78,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Database.executeBatch(batch, 50);
             Test.stopTest();
 
@@ -101,7 +101,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorWithExceptionImpl batch = new BatchProcessorWithExceptionImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorWithExceptionImpl();
             Id batchJobId = Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -118,7 +118,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Id batchJobId = Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -135,7 +135,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Id batchJobId = Database.executeBatch(batch, 1);
             Test.stopTest();
 
@@ -152,7 +152,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Id batchJobId = Database.executeBatch(batch, 2000);
             Test.stopTest();
 
@@ -169,8 +169,8 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
-            Database.QueryLocator ql = batch.start(null);
+            BatchProcessorImpl batchObj = new BatchProcessorImpl();
+            Database.QueryLocator ql = batchObj.start(null);
             Test.stopTest();
 
             Assert.isNotNull(ql, 'QueryLocator should be returned from start method');
@@ -188,7 +188,7 @@ private class BatchProcessorTest {
             delete [SELECT Id FROM Account WHERE Name LIKE 'Test Account%'];
 
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Id batchJobId = Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -205,7 +205,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorImpl batch = new BatchProcessorImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorImpl();
             Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -232,7 +232,7 @@ private class BatchProcessorTest {
 
         System.runAs(testUser) {
             Test.startTest();
-            BatchProcessorFilteredImpl batch = new BatchProcessorFilteredImpl();
+            Database.Batchable<SObject> batch = new BatchProcessorFilteredImpl();
             Id batchJobId = Database.executeBatch(batch, 100);
             Test.stopTest();
 
@@ -244,14 +244,14 @@ private class BatchProcessorTest {
 /**
  * @description Batch processor implementation for testing.
  */
-global class BatchProcessorImpl implements Database.Batchable<SObject> {
+private class BatchProcessorImpl implements Database.Batchable<SObject> {
 
     /**
      * @description Batch start method to define query scope.
      * @param bc BatchableContext instance
      * @return Database.QueryLocator query result set
      */
-    global Database.QueryLocator start(Database.BatchableContext bc) {
+    public Database.QueryLocator start(Database.BatchableContext bc) {
         return Database.getQueryLocator(
             'SELECT Id, Description FROM Account WHERE Name LIKE \'Test Account%\''
         );
@@ -262,7 +262,7 @@ global class BatchProcessorImpl implements Database.Batchable<SObject> {
      * @param bc BatchableContext instance
      * @param scope List of SObjects to process
      */
-    global void execute(Database.BatchableContext bc, List<SObject> scope) {
+    public void execute(Database.BatchableContext bc, List<SObject> scope) {
         List<Account> accountsToUpdate = new List<Account>();
 
         for (SObject sobj : scope) {
@@ -280,7 +280,7 @@ global class BatchProcessorImpl implements Database.Batchable<SObject> {
      * @description Batch finish method for post-processing.
      * @param bc BatchableContext instance
      */
-    global void finish(Database.BatchableContext bc) {
+    public void finish(Database.BatchableContext bc) {
         System.debug('Batch processing complete. Job ID: ' + bc.getJobId());
     }
 }
@@ -288,14 +288,14 @@ global class BatchProcessorImpl implements Database.Batchable<SObject> {
 /**
  * @description Batch processor with exception handling for testing.
  */
-global class BatchProcessorWithExceptionImpl implements Database.Batchable<SObject> {
+private class BatchProcessorWithExceptionImpl implements Database.Batchable<SObject> {
 
     /**
      * @description Start method with exception handling.
      * @param bc BatchableContext instance
      * @return Database.QueryLocator query result set
      */
-    global Database.QueryLocator start(Database.BatchableContext bc) {
+    public Database.QueryLocator start(Database.BatchableContext bc) {
         return Database.getQueryLocator(
             'SELECT Id FROM Account WHERE Name LIKE \'Test Account%\''
         );
@@ -306,7 +306,7 @@ global class BatchProcessorWithExceptionImpl implements Database.Batchable<SObje
      * @param bc BatchableContext instance
      * @param scope List of SObjects to process
      */
-    global void execute(Database.BatchableContext bc, List<SObject> scope) {
+    public void execute(Database.BatchableContext bc, List<SObject> scope) {
         try {
             List<Account> accountsToUpdate = new List<Account>();
             for (SObject sobj : scope) {
@@ -326,7 +326,7 @@ global class BatchProcessorWithExceptionImpl implements Database.Batchable<SObje
      * @description Finish method.
      * @param bc BatchableContext instance
      */
-    global void finish(Database.BatchableContext bc) {
+    public void finish(Database.BatchableContext bc) {
         System.debug('Batch with exception handling completed');
     }
 }
@@ -334,14 +334,14 @@ global class BatchProcessorWithExceptionImpl implements Database.Batchable<SObje
 /**
  * @description Filtered batch processor for testing query conditions.
  */
-global class BatchProcessorFilteredImpl implements Database.Batchable<SObject> {
+private class BatchProcessorFilteredImpl implements Database.Batchable<SObject> {
 
     /**
      * @description Start method with query filtering.
      * @param bc BatchableContext instance
      * @return Database.QueryLocator filtered query result set
      */
-    global Database.QueryLocator start(Database.BatchableContext bc) {
+    public Database.QueryLocator start(Database.BatchableContext bc) {
         return Database.getQueryLocator(
             'SELECT Id, Name FROM Account WHERE Name LIKE \'Test Account%\' ORDER BY Name ASC'
         );
@@ -352,7 +352,7 @@ global class BatchProcessorFilteredImpl implements Database.Batchable<SObject> {
      * @param bc BatchableContext instance
      * @param scope List of filtered SObjects
      */
-    global void execute(Database.BatchableContext bc, List<SObject> scope) {
+    public void execute(Database.BatchableContext bc, List<SObject> scope) {
         List<Account> accountsToUpdate = new List<Account>();
         for (SObject sobj : scope) {
             Account acc = (Account) sobj;
@@ -368,7 +368,7 @@ global class BatchProcessorFilteredImpl implements Database.Batchable<SObject> {
      * @description Finish method.
      * @param bc BatchableContext instance
      */
-    global void finish(Database.BatchableContext bc) {
+    public void finish(Database.BatchableContext bc) {
         System.debug('Filtered batch processing completed');
     }
 }
