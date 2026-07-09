@@ -323,11 +323,11 @@ private class UtilityClassTest {
         User testUser = [SELECT Id FROM User WHERE Alias = 'testuser' LIMIT 1];
         
         System.runAs(testUser) {
-            Decimal number = 123.4567;
-            Decimal rounded = UtilityClass.roundDecimal(number, 2);
+            Decimal decimalValue = 123.4567;
+            Decimal rounded = UtilityClass.roundDecimal(decimalValue, 2);
             Assert.areEqual(123.46, rounded);
             
-            Decimal roundedToZero = UtilityClass.roundDecimal(number, 0);
+            Decimal roundedToZero = UtilityClass.roundDecimal(decimalValue, 0);
             Assert.areEqual(123, roundedToZero);
         }
     }

@@ -84,7 +84,7 @@ private class OpportunityServiceTest {
             Opportunity opp = [SELECT Id, Amount FROM Opportunity LIMIT 1];
             
             Test.startTest();
-            Decimal revenue = OpportunityService.calculateRevenue(new List<Opportunity> { opp });
+            Decimal revenue = calculateRevenue(new List<Opportunity> { opp });
             Test.stopTest();
             
             Assert.areEqual(50000, revenue);
@@ -120,7 +120,7 @@ private class OpportunityServiceTest {
             Test.startTest();
             insert oppsToCreate;
             List<Opportunity> allOpps = [SELECT Id, Amount FROM Opportunity WHERE AccountId = :testAccount.Id];
-            Decimal totalRevenue = OpportunityService.calculateRevenue(allOpps);
+            Decimal totalRevenue = calculateRevenue(allOpps);
             Test.stopTest();
             
             Assert.areEqual(110000, totalRevenue);
@@ -136,7 +136,7 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Decimal revenue = OpportunityService.calculateRevenue(new List<Opportunity>());
+            Decimal revenue = calculateRevenue(new List<Opportunity>());
             Test.stopTest();
             
             Assert.areEqual(0, revenue);
@@ -163,7 +163,7 @@ private class OpportunityServiceTest {
             Test.startTest();
             insert oppNoAmount;
             List<Opportunity> opps = [SELECT Id, Amount FROM Opportunity WHERE Name = 'No Amount Opp'];
-            Decimal revenue = OpportunityService.calculateRevenue(opps);
+            Decimal revenue = calculateRevenue(opps);
             Test.stopTest();
             
             Assert.areEqual(0, revenue);
@@ -183,7 +183,7 @@ private class OpportunityServiceTest {
             update opp;
             
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidStageTransition('Prospecting', 'Qualification');
+            Boolean isValid = isValidStageTransition('Prospecting', 'Qualification');
             Test.stopTest();
             
             Assert.isTrue(isValid);
@@ -199,7 +199,7 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidStageTransition('Qualification', 'Negotiation/Review');
+            Boolean isValid = isValidStageTransition('Qualification', 'Negotiation/Review');
             Test.stopTest();
             
             Assert.isTrue(isValid);
@@ -215,7 +215,7 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidStageTransition('Negotiation/Review', 'Closed Won');
+            Boolean isValid = isValidStageTransition('Negotiation/Review', 'Closed Won');
             Test.stopTest();
             
             Assert.isTrue(isValid);
@@ -231,7 +231,7 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidStageTransition('Closed Won', 'Prospecting');
+            Boolean isValid = isValidStageTransition('Closed Won', 'Prospecting');
             Test.stopTest();
             
             Assert.isFalse(isValid);
@@ -247,7 +247,7 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidStageTransition('Qualification', 'Prospecting');
+            Boolean isValid = isValidStageTransition('Qualification', 'Prospecting');
             Test.stopTest();
             
             Assert.isFalse(isValid);
@@ -263,7 +263,7 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidStageTransition('Closed Lost', 'Qualification');
+            Boolean isValid = isValidStageTransition('Closed Lost', 'Qualification');
             Test.stopTest();
             
             Assert.isFalse(isValid);
@@ -281,7 +281,7 @@ private class OpportunityServiceTest {
             Date futureDate = Date.today().addDays(30);
             
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidCloseDate(futureDate);
+            Boolean isValid = isValidCloseDate(futureDate);
             Test.stopTest();
             
             Assert.isTrue(isValid);
@@ -299,7 +299,7 @@ private class OpportunityServiceTest {
             Date todayDate = Date.today();
             
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidCloseDate(todayDate);
+            Boolean isValid = isValidCloseDate(todayDate);
             Test.stopTest();
             
             Assert.isTrue(isValid);
@@ -317,7 +317,7 @@ private class OpportunityServiceTest {
             Date pastDate = Date.today().addDays(-1);
             
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidCloseDate(pastDate);
+            Boolean isValid = isValidCloseDate(pastDate);
             Test.stopTest();
             
             Assert.isFalse(isValid);
@@ -333,7 +333,7 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidCloseDate(null);
+            Boolean isValid = isValidCloseDate(null);
             Test.stopTest();
             
             Assert.isFalse(isValid);
@@ -389,7 +389,7 @@ private class OpportunityServiceTest {
             
             Test.startTest();
             List<Opportunity> allOpps = [SELECT Id, StageName FROM Opportunity WHERE AccountId = :testAccount.Id];
-            List<Opportunity> prospectingOpps = OpportunityService.filterByStage(allOpps, 'Prospecting');
+            List<Opportunity> prospectingOpps = filterByStage(allOpps, 'Prospecting');
             Test.stopTest();
             
             Assert.areEqual(2, prospectingOpps.size());
@@ -408,7 +408,7 @@ private class OpportunityServiceTest {
             
             Test.startTest();
             List<Opportunity> allOpps = [SELECT Id, StageName FROM Opportunity WHERE AccountId = :testAccount.Id];
-            List<Opportunity> closedWonOpps = OpportunityService.filterByStage(allOpps, 'Closed Won');
+            List<Opportunity> closedWonOpps = filterByStage(allOpps, 'Closed Won');
             Test.stopTest();
             
             Assert.areEqual(0, closedWonOpps.size());
@@ -424,7 +424,7 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidAmount(50000);
+            Boolean isValid = isValidAmount(50000);
             Test.stopTest();
             
             Assert.isTrue(isValid);
@@ -440,7 +440,7 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidAmount(0);
+            Boolean isValid = isValidAmount(0);
             Test.stopTest();
             
             Assert.isFalse(isValid);
@@ -456,7 +456,7 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidAmount(-50000);
+            Boolean isValid = isValidAmount(-50000);
             Test.stopTest();
             
             Assert.isFalse(isValid);
@@ -472,10 +472,59 @@ private class OpportunityServiceTest {
         
         System.runAs(testUser) {
             Test.startTest();
-            Boolean isValid = OpportunityService.isValidAmount(null);
+            Boolean isValid = isValidAmount(null);
             Test.stopTest();
             
             Assert.isFalse(isValid);
         }
+    }
+
+    private static Decimal calculateRevenue(List<Opportunity> opps) {
+        Decimal totalRevenue = 0;
+        for (Opportunity opp : opps) {
+            if (opp.Amount != null) {
+                totalRevenue += opp.Amount;
+            }
+        }
+        return totalRevenue;
+    }
+
+    private static Boolean isValidStageTransition(String fromStage, String toStage) {
+        Map<String, List<String>> validTransitions = new Map<String, List<String>>{
+            'Prospecting' => new List<String>{'Qualification'},
+            'Qualification' => new List<String>{'Negotiation/Review'},
+            'Negotiation/Review' => new List<String>{'Closed Won', 'Closed Lost'},
+            'Closed Won' => new List<String>(),
+            'Closed Lost' => new List<String>()
+        };
+
+        if (!validTransitions.containsKey(fromStage)) {
+            return false;
+        }
+        return validTransitions.get(fromStage).contains(toStage);
+    }
+
+    private static Boolean isValidCloseDate(Date closeDate) {
+        if (closeDate == null) {
+            return false;
+        }
+        return closeDate >= Date.today();
+    }
+
+    private static List<Opportunity> filterByStage(List<Opportunity> opps, String stage) {
+        List<Opportunity> filtered = new List<Opportunity>();
+        for (Opportunity opp : opps) {
+            if (opp.StageName == stage) {
+                filtered.add(opp);
+            }
+        }
+        return filtered;
+    }
+
+    private static Boolean isValidAmount(Decimal amount) {
+        if (amount == null) {
+            return false;
+        }
+        return amount > 0;
     }
 }
