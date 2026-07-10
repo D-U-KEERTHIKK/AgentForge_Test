@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SustnUomConversion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <conversionFactor>0.9</conversionFactor>
+    <fuelType>Diesel</fuelType>
+    <isProtected>false</isProtected>
+    <masterLabel>KG_Liters</masterLabel>
+    <sourceUom>kG</sourceUom>
+    <targetUom>Liters</targetUom>
+    <uomsKey>uomsKey</uomsKey>
+</SustnUomConversion>

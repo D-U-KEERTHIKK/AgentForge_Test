@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DisclosureType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>ESG Disclosure Type</description>
+    <disclosureCategory>EnvSocGvnc</disclosureCategory>
+    <disclosureBodyUrl>https://example.com</disclosureBodyUrl>
+    <isProtected>false</isProtected>
+    <masterLabel>ESG</masterLabel>
+</DisclosureType>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ServiceProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+   <processLabel>EmailUpdate</processLabel>
+   <usageType>FinancialServices</usageType>
+   <serviceProcessAttributes>
+      <label>EmailAddress</label>
+      <developerName>EmailAddress</developerName>
+      <dataType>Text</dataType>
+      <groupApiName>Info</groupApiName>
+   </serviceProcessAttributes>
+   <serviceProcessDependencies>
+      <dependencyReference>EmailPreprocessor</dependencyReference>
+      <type>PreprocessorApexClass</type>
+   </serviceProcessDependencies>
+   <serviceProcessItemGroups>
+        <apiName>Info</apiName>
+        <groupName>Info</groupName>
+        <sortOrder>1</sortOrder>
+    </serviceProcessItemGroups>
+</ServiceProcess>

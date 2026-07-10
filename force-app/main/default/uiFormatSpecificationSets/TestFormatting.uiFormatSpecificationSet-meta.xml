@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UiFormatSpecificationSet xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <field>Test__c.Status__c</field>
+
+    <formatType>HIGHLIGHT</formatType>
+
+    <masterLabel>TestFormatting</masterLabel>
+
+    <sobjectType>Test__c</sobjectType>
+
+    <uiFormatSpecifications>
+        <formatProperties>{&quot;backgroundColor&quot;:&quot;#d4edda&quot;}</formatProperties>
+        <formatType>HIGHLIGHT</formatType>
+        <order>1</order>
+        <visibilityRule>
+            <criteria>
+                <leftValue>{!Record.Status__c}</leftValue>
+                <operator>EQUAL</operator>
+                <rightValue>Completed</rightValue>
+            </criteria>
+        </visibilityRule>
+    </uiFormatSpecifications>
+
+    <uiFormatSpecifications>
+        <formatProperties>{&quot;backgroundColor&quot;:&quot;#fff3cd&quot;}</formatProperties>
+        <formatType>HIGHLIGHT</formatType>
+        <order>2</order>
+        <visibilityRule>
+            <criteria>
+                <leftValue>{!Record.Status__c}</leftValue>
+                <operator>EQUAL</operator>
+                <rightValue>Pending</rightValue>
+            </criteria>
+        </visibilityRule>
+    </uiFormatSpecifications>
+
+</UiFormatSpecificationSet>

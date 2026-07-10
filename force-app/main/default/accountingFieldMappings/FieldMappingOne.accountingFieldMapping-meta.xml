@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AccountingFieldMapping xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accountingModelConfig>ModelConfigOne</accountingModelConfig>
+    <fullName>FieldMappingOne</fullName>
+    <masterLabel>FieldMappingOne</masterLabel>
+    <isForAllocationType>true</isForAllocationType>
+    <isForPaymentType>true</isForPaymentType>
+    <isForTransactionType>true</isForTransactionType>
+    <mappingBehavior>PointInTime</mappingBehavior>
+    <sourceField>TransactionJournal.MappingTargetOne__c</sourceField>
+    <targetField>MappingTargetOne__c</targetField>
+    <isProtected>false</isProtected>
+</AccountingFieldMapping>

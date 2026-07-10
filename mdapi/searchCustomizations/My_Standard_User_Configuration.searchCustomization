@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchCustomization xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <channel>GlobalSearch</channel>
+
+    <masterLabel>My_Standard_User_Configuration</masterLabel>
+
+    <objectOverride>
+        <objectApiName>Account</objectApiName>
+
+        <fieldOverride>
+            <fieldApiName>Description</fieldApiName>
+            <searchable>false</searchable>
+        </fieldOverride>
+
+        <fieldOverride>
+            <fieldApiName>Rating</fieldApiName>
+            <searchable>true</searchable>
+        </fieldOverride>
+    </objectOverride>
+
+    <objectOverride>
+        <objectApiName>Contact</objectApiName>
+    </objectOverride>
+
+    <objectToAlwaysSearch>Account</objectToAlwaysSearch>
+    <objectToAlwaysSearch>Contact</objectToAlwaysSearch>
+
+    <profile>Standard</profile>
+
+</SearchCustomization>

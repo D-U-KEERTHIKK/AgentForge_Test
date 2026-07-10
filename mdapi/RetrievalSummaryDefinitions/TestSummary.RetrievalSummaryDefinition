@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RetrievalSummaryDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <masterLabel>Test Summary</masterLabel>
+
+    <rootObject>Account</rootObject>
+
+    <retrievalSummaryDefFields>
+        <field>Name</field>
+        <sequenceNumber>1</sequenceNumber>
+    </retrievalSummaryDefFields>
+
+</RetrievalSummaryDefinition>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ManagedEventSubscription xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <defaultReplay>LATEST</defaultReplay>
+    <errorRecoveryReplay>LATEST</errorRecoveryReplay>
+
+    <label>Test Subscription</label>
+
+    <state>RUN</state>
+
+    <topicName>/event/Test_PlatformEvent__e</topicName>
+
+</ManagedEventSubscription>

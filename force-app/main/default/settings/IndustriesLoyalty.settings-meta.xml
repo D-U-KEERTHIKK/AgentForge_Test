@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IndustriesLoyaltySettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableNQPRealTimePointBalance>true</enableNQPRealTimePointBalance>
+    <enableFixedTypeNQPAggregation>true</enableFixedTypeNQPAggregation>
+    <enableQPRealTimePointBalance>true</enableQPRealTimePointBalance>
+    <enableLoyaltyRulesVerifyCdpMemberSegment>false</enableLoyaltyRulesVerifyCdpMemberSegment>
+    <enableLoyaltyRedeemedPointsExpirationInfoPref>true</enableLoyaltyRedeemedPointsExpirationInfoPref>
+    <enableLoyaltyServiceExcellence>true</enableLoyaltyServiceExcellence>
+    <enableAutomaticVoucherCodeGeneration>true</enableAutomaticVoucherCodeGeneration>
+    <enableLoyaltyApiAccessForExternalSiteUsers>false</enableLoyaltyApiAccessForExternalSiteUsers>
+    <enableAutomaticMemberTierAssessmentSelection>false</enableAutomaticMemberTierAssessmentSelection>
+    <enableNonQualifyingPointsConsolidation>false</enableNonQualifyingPointsConsolidation>
+    <enablePointsLifecycleTracking>false</enablePointsLifecycleTracking>
+    <enableNegativePointBalance>false</enableNegativePointBalance>
+    <enableSegmentQueryByDataGraph>false</enableSegmentQueryByDataGraph>
+    <enablePromSetupProcRuleStatusInheritDplymt>false</enablePromSetupProcRuleStatusInheritDplymt>
+    <enableLoyaltyGenerativeAi>false</enableLoyaltyGenerativeAi>
+    <enableTransferPointsToMemberGroupsRealtime>false</enableTransferPointsToMemberGroupsRealtime>
+    <enableUsePromPtyUsageForEngmtTrail>false</enableUsePromPtyUsageForEngmtTrail>
+    <enableSegmentQueryApiMultipleDataSpace>true</enableSegmentQueryApiMultipleDataSpace>
+    <enableConfigureClubs>true</enableConfigureClubs>
+</IndustriesLoyaltySettings>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdvAccountForecastSet xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <forecastSetName>Forecast Set 1</forecastSetName>
+    <forecastFactObjectName>AdvAccountForecastFact</forecastFactObjectName>
+    <forecastPeriodGroupName>PeriodGroup1</forecastPeriodGroupName>
+    <status>Inactive</status>
+
+    <calculationFrequency>Monthly</calculationFrequency>
+    <rolloverFrequency>Monthly</rolloverFrequency>
+
+    <accountFieldName>Account</accountFieldName>
+    <periodFieldName>Period</periodFieldName>
+
+</AdvAccountForecastSet>

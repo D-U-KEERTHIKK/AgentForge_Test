@@ -1,0 +1,12 @@
+{
+	"servers": {
+		"salesforge": {
+			"type": "http",
+			"url": "https://salesforge.opsera.dev/api/v1/mcp",
+			"headers": {
+				"Authorization": "Bearer sf_live_57768a4e14130ff99a9a4867457fbd6cd357068e53ee27a5"
+			}
+		}
+	},
+	"inputs": []
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MarketSegmentDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <segmentType>DBT</segmentType>
+
+    <includeCriteria>
+    <![CDATA[
+        <DbtPipeline>
+            <models>
+                <model>
+                    <name>m1</name>
+                    <sql>select Id from Account</sql>
+                </model>
+            </models>
+        </DbtPipeline>
+    ]]>
+    </includeCriteria>
+
+    <masterLabel>Test Segment</masterLabel>
+
+</MarketSegmentDefinition>

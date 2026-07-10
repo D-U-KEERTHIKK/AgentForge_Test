@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AccountingModelConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ModelConfigOne</fullName>
+    <masterLabel>ModelConfigOne</masterLabel>
+
+    <accountingType>Revenue</accountingType>
+
+    <defaultAccrualAccountCode>ACC001</defaultAccrualAccountCode>
+    <defaultWriteOffAccountCode>WO001</defaultWriteOffAccountCode>
+
+    <earliestCreatedDate>2023-01-01T00:00:00.000Z</earliestCreatedDate>
+
+    <expectedCashFlowGrouping>GroupByFundAccount</expectedCashFlowGrouping>
+    <paidCashFlowGrouping>GroupBySummary</paidCashFlowGrouping>
+
+    <internalMappingDetails>{"mapping":"test"}</internalMappingDetails>
+
+    <isActive>false</isActive>
+    <isUsed>false</isUsed>
+
+    <runOrder>1</runOrder>
+</AccountingModelConfig>

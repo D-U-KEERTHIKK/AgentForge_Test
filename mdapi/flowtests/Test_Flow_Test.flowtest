@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowTest xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flowApiName>Test_Flow_Auto</flowApiName>
+    <label>Test Flow Validation</label>
+
+    <testPoints>
+        <elementApiName>Start</elementApiName>
+        <parameters>
+            <leftValueReference>recordVar</leftValueReference>
+            <type>InputVariable</type>
+            <value>
+                <sobjectValue>{"Industry":"Other"}</sobjectValue>
+            </value>
+        </parameters>
+    </testPoints>
+
+    <testPoints>
+        <assertions>
+            <conditions>
+                <leftValueReference>recordVar.Industry</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <errorMessage>Industry not set correctly</errorMessage>
+        </assertions>
+        <elementApiName>Finish</elementApiName>
+    </testPoints>
+
+    <testType>WithAssertion</testType>
+</FlowTest>

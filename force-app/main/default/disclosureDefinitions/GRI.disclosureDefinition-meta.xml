@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DisclosureDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>GRI Disclosure Definition for compliance reporting</description>
+    <disclosureType>GRI_TYPE</disclosureType>
+    <isProtected>false</isProtected>
+    <masterLabel>GRI</masterLabel>
+</DisclosureDefinition>

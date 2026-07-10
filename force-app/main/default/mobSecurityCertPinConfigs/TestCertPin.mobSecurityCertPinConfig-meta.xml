@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MobSecurityCertPinConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <masterLabel>TestCertPin</masterLabel>
+
+    <certificateHash>AaBbCcDdEeFf</certificateHash>
+
+    <domainName>login.salesforce.com</domainName>
+
+    <isEnabled>true</isEnabled>
+
+    <isSubdomainIncluded>false</isSubdomainIncluded>
+
+    <mobilePlatform>Android</mobilePlatform>
+
+    <severityLevel>Error</severityLevel>
+
+    <type>AuthServer</type>
+
+    <mobileSecurityAssignment>TestMobile</mobileSecurityAssignment>
+
+</MobSecurityCertPinConfig>

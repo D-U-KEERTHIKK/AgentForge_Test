@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataKitObjectTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <developerName>TestTemplate</developerName>
+
+    <entityPayload>
+        {
+            "type": "TEST"
+        }
+    </entityPayload>
+
+    <masterLabel>Test Template</masterLabel>
+
+    <parentDataPackageKitDefinitionName>TestKit</parentDataPackageKitDefinitionName>
+
+    <sourceObject>TestObject</sourceObject>
+
+    <sourceObjectType>DATA_GRAPH</sourceObjectType>
+
+    <templateVersion>1</templateVersion>
+
+</DataKitObjectTemplate>

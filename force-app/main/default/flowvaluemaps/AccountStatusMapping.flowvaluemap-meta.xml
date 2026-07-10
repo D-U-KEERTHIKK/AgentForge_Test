@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowValueMap xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Account Status Mapping</label>
+    <description>Maps external account statuses to Salesforce statuses.</description>
+    <sourceType>String</sourceType>
+    <targetType>String</targetType>
+    <defaultValueStrategy>PassThrough</defaultValueStrategy>
+
+    <valueMapEntries>
+        <sourceValue>New</sourceValue>
+        <targetValue>Prospect</targetValue>
+    </valueMapEntries>
+
+    <valueMapEntries>
+        <sourceValue>Working</sourceValue>
+        <targetValue>Qualified</targetValue>
+    </valueMapEntries>
+</FlowValueMap>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MfgProgramTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <programTemplateName>TestProgram</programTemplateName>
+
+    <status>Draft</status>
+
+    <description>Test Manufacturing Program</description>
+
+    <programTemplateItems>
+        <templateItemName>Item1</templateItemName>
+        <transformationDisplayOrder>1</transformationDisplayOrder>
+        <transformationType>BusinessTransformation</transformationType>
+    </programTemplateItems>
+
+</MfgProgramTemplate>

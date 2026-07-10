@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchOrgWideObjectConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <masterLabel>TestObjectSearch</masterLabel>
+
+    <objectReference>Test__c</objectReference>
+
+</SearchOrgWideObjectConfig>

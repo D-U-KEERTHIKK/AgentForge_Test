@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AnalyticsDashboard xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <analyticsWorkspace>My_Workspace</analyticsWorkspace>
+    <description>A dashboard</description>
+
+    <layouts>
+        <analyticsDashboard>My_Dashboard</analyticsDashboard>
+        <columnCount>36</columnCount>
+        <layoutName>default</layoutName>
+        <maxWidth>1200</maxWidth>
+        <label>layoutLabel</label>
+
+        <pages>
+            <index>0</index>
+            <label>Page 1</label>
+            <pageName>page1</pageName>
+
+            <pageWidgets>
+                <analyticsDashboardWidget>visualization_1</analyticsDashboardWidget>
+                <colspan>11</colspan>
+                <column>1</column>
+                <row>2</row>
+                <rowspan>10</rowspan>
+            </pageWidgets>
+        </pages>
+
+        <rowHeight>24</rowHeight>
+        <style>{"backgroundColor":"#ffffff"}</style>
+    </layouts>
+
+    <masterLabel>My Dashboard</masterLabel>
+    <style>{"widgetStyle":{"backgroundColor":"#ffffff"}}</style>
+    <version>64.0</version>
+
+    <widgets>
+        <analyticsDashboard>My_Dashboard</analyticsDashboard>
+        <type>visualization</type>
+
+        <vizWidgetDefs>
+            <analyticsVisualization>New_Visualization</analyticsVisualization>
+            <parameters>{"legendPosition":"Right"}</parameters>
+        </vizWidgetDefs>
+
+        <widgetName>visualization_1</widgetName>
+    </widgets>
+
+</AnalyticsDashboard>

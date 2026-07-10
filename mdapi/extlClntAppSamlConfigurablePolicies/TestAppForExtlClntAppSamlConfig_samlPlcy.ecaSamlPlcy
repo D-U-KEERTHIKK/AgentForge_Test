@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtlClntAppSamlConfigurablePolicies xmlns="http://soap.sforce.com/2006/04/metadata">
+    
+    <acsUrl>https://updated-example.com/acs</acsUrl>
+    
+    <entityUrl>https://updated-example.com/entity</entityUrl>
+    
+    <externalClientApplication>TestAppForExtlClntAppSamlConfig</externalClientApplication>
+    
+    <issuer>https://yourdomain.my.salesforce.com</issuer>
+    
+    <label>Test_SAML_Policy</label>
+    
+    <nameIdFormat>Unspecified</nameIdFormat>
+    
+    <singleLogoutUrl>https://updated-example.com/logout</singleLogoutUrl>
+    
+    <singleLogoutBindingType>RedirectBinding</singleLogoutBindingType>
+    
+    <subjectType>Username</subjectType>
+
+</ExtlClntAppSamlConfigurablePolicies>

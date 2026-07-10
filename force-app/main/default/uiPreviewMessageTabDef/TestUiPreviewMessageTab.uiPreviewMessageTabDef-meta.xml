@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UiPreviewMessageTabDef xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isActive>true</isActive>
+    <label>TestUiPreviewMessageTab</label>
+    <lightningComponentDef>customTab</lightningComponentDef>
+    <supportedChannel>Email</supportedChannel>
+    <tabName>MyTab</tabName>
+    <isProtected>false</isProtected>
+</UiPreviewMessageTabDef>

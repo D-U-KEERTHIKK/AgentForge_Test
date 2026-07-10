@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WaveAnalyticAssetCollection xmlns="http://soap.sforce.com/2006/04/metadata">
+    <collectionType>static</collectionType>
+    <color>#1b96ff</color>
+    <folder>TestCollection</folder>
+    <items>
+        <asset>TestDashboard</asset>
+        <assetType>Dashboard</assetType>
+        <sortOrder>499</sortOrder>
+    </items>
+    <label>TestCollection</label>
+    <masterLabel>TestCollection</masterLabel>
+    <shares>
+        <accessLevel>Manage</accessLevel>
+        <sharedTo>punitha.kariappa@opsera.io</sharedTo>
+        <sharedToType>User</sharedToType>
+    </shares>
+</WaveAnalyticAssetCollection>

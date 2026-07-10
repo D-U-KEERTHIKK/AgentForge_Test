@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataObjectBuildOrgTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <developerName>TestBuildTemplate</developerName>
+
+    <masterLabel>Test Build Template</masterLabel>
+
+    <objectDevName>TestObject</objectDevName>
+
+    <objectPayload>
+        {
+            "type": "TEST_OBJECT"
+        }
+    </objectPayload>
+
+    <objectType>DataGraph</objectType>
+
+    <templateObject>TestTemplate</templateObject>
+
+    <templateVersion>1</templateVersion>
+
+</DataObjectBuildOrgTemplate>

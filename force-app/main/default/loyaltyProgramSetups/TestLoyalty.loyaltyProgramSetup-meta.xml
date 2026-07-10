@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LoyaltyProgramSetup xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <label>Test Loyalty Program</label>
+
+    <programProcesses>
+        <processName>Test Process</processName>
+        <processType>TransactionJournal</processType>
+        <status>Draft</status>
+        <executionType>RealTime</executionType>
+    </programProcesses>
+
+</LoyaltyProgramSetup>

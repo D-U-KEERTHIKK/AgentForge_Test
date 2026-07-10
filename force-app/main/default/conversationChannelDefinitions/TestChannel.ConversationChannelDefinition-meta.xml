@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConversationChannelDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <developerName>Test_ChannelDefinition</developerName>
+
+    <masterLabel>TestChannel</masterLabel>
+
+    <customPlatformEvent>Test_Event__e</customPlatformEvent>
+
+    <customEventPayloadField>TestNamespace__Payload__c</customEventPayloadField>
+
+    <supportsImplicitConsent>true</supportsImplicitConsent>
+
+</ConversationChannelDefinition>

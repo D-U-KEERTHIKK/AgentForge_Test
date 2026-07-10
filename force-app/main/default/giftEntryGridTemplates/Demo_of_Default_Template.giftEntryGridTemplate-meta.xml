@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GiftEntryGridTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Test Template</description>
+    <developerName>Demo_of_Default_Template</developerName>
+    <isSingleGiftDefault>false</isSingleGiftDefault>
+    <masterLabel>Demo of Default Template</masterLabel>
+    <templateConfiguration>templateName: Demo
+apiVersion: 66.0
+columns:
+ -
+  columnId: GiftAmount
+  columnType: Field
+  columnField:
+    sourceField: GiftAmount
+    isFieldRequired: false
+    isFieldHidden: false
+  isColumnHidden: false
+  isColumnReadOnly: false
+  columnWidth: 160
+  columnLabel: GiftAmount</templateConfiguration>
+</GiftEntryGridTemplate>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordAggregationDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <aggregateToObject>Account</aggregateToObject>
+
+    <aggregateFromObject>Contact</aggregateFromObject>
+
+    <aggregationType>Record</aggregationType>
+
+    <status>Active</status>
+
+    <displayName>Contact to Account Aggregation</displayName>
+
+    <description>Test aggregation</description>
+
+    <recordAggregationObject>
+        <associatedObject>Account</associatedObject>
+        <masterLabel>Account Object</masterLabel>
+        <developerName>AccountObject</developerName>
+    </recordAggregationObject>
+
+    <recordAggregationObject>
+        <associatedObject>Contact</associatedObject>
+        <masterLabel>Contact Object</masterLabel>
+        <developerName>ContactObject</developerName>
+    </recordAggregationObject>
+
+</RecordAggregationDefinition>

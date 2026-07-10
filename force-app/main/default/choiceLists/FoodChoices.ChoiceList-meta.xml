@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ChoiceList xmlns="http://soap.sforce.com/2006/04/metadata">
+    <choiceListValue>
+        <isDefaultValue>true</isDefaultValue>
+        <order>0</order>
+        <valueName>Pizza</valueName>
+    </choiceListValue>
+    <choiceListValue>
+        <isDefaultValue>false</isDefaultValue>
+        <order>1</order>
+        <valueName>Burger</valueName>
+    </choiceListValue>
+    <masterLabel>Food</masterLabel>
+    <description>Food Choice List</description>
+</ChoiceList>

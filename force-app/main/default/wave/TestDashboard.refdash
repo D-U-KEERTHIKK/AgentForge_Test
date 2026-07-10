@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReferencedDashboard xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <application>my_app</application>
+
+    <masterLabel>TestDashboard</masterLabel>
+
+    <description>Test Tableau Dashboard</description>
+
+    <embedUrl>https://public.tableau.com/views/Superstore_24/Overview</embedUrl>
+
+    <visibility>ALL</visibility>
+
+</ReferencedDashboard>

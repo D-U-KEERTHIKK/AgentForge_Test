@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<InvocableActionExtension xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <targets>
+        <targetType>ActionParameter</targetType>
+        <targetName>Test.inputOne</targetName>
+        <attributes>
+            <key>Order</key>
+            <dataType>Integer</dataType>
+            <value>1</value>
+        </attributes>
+    </targets>
+
+    <targets>
+        <targetType>ActionParameter</targetType>
+        <targetName>Test.inputTwo</targetName>
+        <attributes>
+            <key>Order</key>
+            <dataType>Integer</dataType>
+            <value>2</value>
+        </attributes>
+    </targets>
+
+    <targets>
+        <targetType>ActionParameter</targetType>
+        <targetName>Test.inputThree</targetName>
+        <attributes>
+            <key>Order</key>
+            <dataType>Integer</dataType>
+            <value>3</value>
+        </attributes>
+    </targets>
+
+</InvocableActionExtension>

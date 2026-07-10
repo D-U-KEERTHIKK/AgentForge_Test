@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalDataTranObject xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <availabilityStatus>Available</availabilityStatus>
+
+    <creationType>Custom</creationType>
+
+    <masterLabel>PlatformTraces</masterLabel>
+
+    <objectCategory>Profile</objectCategory>
+
+</ExternalDataTranObject>

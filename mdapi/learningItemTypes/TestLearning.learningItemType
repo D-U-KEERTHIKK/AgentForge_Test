@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LearningItemType xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <developerName>TestLearning</developerName>
+    <masterLabel>Test Learning</masterLabel>
+
+    <customObject>Test_Object__c</customObject>
+    <customField>Test_Field__c</customField>
+
+    <icon>standard:flow</icon>
+
+    <lightningComponentDefinition>c:testComponent</lightningComponentDefinition>
+
+</LearningItemType>

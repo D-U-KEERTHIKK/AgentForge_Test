@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FundraisingConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <masterLabel>My Fundraising Config</masterLabel>
+    
+    <failedTransactionCount>3</failedTransactionCount>
+    
+    <lapsedUnpaidTrxnCount>5</lapsedUnpaidTrxnCount>
+    
+    <installmentExtDayCount>7</installmentExtDayCount>
+    
+    <shouldCreateRcrSchdTrxn>true</shouldCreateRcrSchdTrxn>
+    
+    <shouldClosePaidRcrCmt>false</shouldClosePaidRcrCmt>
+
+</FundraisingConfig>

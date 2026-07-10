@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtlClntAppMobileConfigurablePolicies xmlns="http://soap.sforce.com/2006/04/metadata">
+    
+    <externalClientApplication>TestAppForMetadata</externalClientApplication>
+    
+    <label>My Mobile Policy</label>
+    
+    <screenLockTimeout>Five</screenLockTimeout>
+
+</ExtlClntAppMobileConfigurablePolicies>

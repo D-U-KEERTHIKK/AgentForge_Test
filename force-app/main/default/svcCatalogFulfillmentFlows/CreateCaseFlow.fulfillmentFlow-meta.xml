@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SvcCatalogFulfillmentFlow xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <description>Create Case Flow for Service Catalog</description>
+
+    <flow>Create_Case_Flow</flow>
+
+    <isProtected>false</isProtected>
+
+    <items>
+        <catalogInputVariable>Input_Subject</catalogInputVariable>
+        <displayType>Text</displayType>
+        <isAdditionalQuestionsInputVariable>false</isAdditionalQuestionsInputVariable>
+        <isRequired>true</isRequired>
+        <masterLabel>Case Subject</masterLabel>
+    </items>
+
+    <masterLabel>CreateCaseFlow</masterLabel>
+
+</SvcCatalogFulfillmentFlow>

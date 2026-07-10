@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StageDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <active>true</active>
+
+    <masterLabel>TestStage</masterLabel>
+
+    <referenceObject>Test__c</referenceObject>
+
+    <referenceObjectField>Status__c</referenceObjectField>
+
+    <stageValue>
+        <value>Start</value>
+    </stageValue>
+
+    <stageValue>
+        <value>End</value>
+    </stageValue>
+
+</StageDefinition>

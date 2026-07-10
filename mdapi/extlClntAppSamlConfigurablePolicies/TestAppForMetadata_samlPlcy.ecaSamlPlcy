@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtlClntAppSamlConfigurablePolicies xmlns="http://soap.sforce.com/2006/04/metadata">
+    <acsUrl>https://example.com/saml/acs</acsUrl>
+    <commaSeparatedProfile>Sys Admin Demo</commaSeparatedProfile>
+    <encryptionType>AES_128</encryptionType>
+    <entityUrl>https://testapp.saml.entity</entityUrl>
+    <externalClientApplication>TestAppForMetadata</externalClientApplication>
+    <label>TestAppForMetadata_samlPlcy</label>
+    <nameIdFormat>Unspecified</nameIdFormat>
+    <signingAlgorithmType>SHA1</signingAlgorithmType>
+    <singleLogoutBindingType>RedirectBinding</singleLogoutBindingType>
+    <singleLogoutUrl>https://example.com/slo</singleLogoutUrl>
+    <subjectType>Username</subjectType>
+</ExtlClntAppSamlConfigurablePolicies>

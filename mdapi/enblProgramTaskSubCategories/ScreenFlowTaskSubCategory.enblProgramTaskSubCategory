@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EnblProgramTaskSubCategory xmlns="http://soap.sforce.com/2006/04/metadata">
+    <developerName>ScreenFlowTaskSubCategory</developerName>
+    <icon>standard:flow</icon>
+    <learningItemType>ScreenFlowLearningItemType</learningItemType>
+    <masterLabel>Screen Flow Exercise</masterLabel>
+</EnblProgramTaskSubCategory>
